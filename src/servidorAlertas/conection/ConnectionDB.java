@@ -5,9 +5,7 @@
  */
 package servidorAlertas.conection;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  *
@@ -23,10 +21,11 @@ public class ConnectionDB {
    
     public ConnectionDB() {
         objConnectionDB=null;
-        dbName="DB_Alerts";
+        dbName="db_alerts";
         user="root";
         password="";
-        url = "jdbc:mysql://localhost/"+dbName;
+        url = "jdbc:mysql://localhost/"+this.dbName;
+   
     }
     public ConnectionDB(String dbName,String user, String password) {
         this.objConnectionDB=null;
@@ -35,23 +34,29 @@ public class ConnectionDB {
         this.password=password;
         this.url = "jdbc:mysql://localhost/"+dbName;
     }
-    /**Permite hacer la conexion con la base de datos    
+    /**Permite hacer la conexion con la base de datos
+     * @return 
      */
-    public int connect(){
+    public int connect() {
         int bandera=-1;
         try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
            //crea una instancia de la controlador de la base de datos
             objConnectionDB = DriverManager.getConnection(url,user,password);
+          
             // gnera una conexión con la base de datos
              bandera=1;
         }
         catch(SQLException e){
-            System.out.println("Error: " + e.getMessage());
+             System.out.println("Error: " + e.getMessage());
+        }catch(ClassNotFoundException e){
+             System.out.println("Error class: " + e.getMessage());
+        }catch(IllegalAccessException e){
+             System.out.println("Error ilegal: " + e.getMessage());
+        }catch(InstantiationException e){
+             System.out.println("Error instancia: " + e.getMessage());
         }
-        catch(Exception e){
-            System.out.println("Error: " + e.getMessage());
-        }
+           
         return bandera;
     }
     /**Cierra la conexion con la base de datos
@@ -68,9 +73,10 @@ public class ConnectionDB {
    }
      /**Retorna un objeto que almacena la referencia a la conexion con la base de datos
      *
+     * @return 
      */
     public Connection getConnection(){
-      return objConnectionDB;
+      return this.objConnectionDB;
    }
  
    

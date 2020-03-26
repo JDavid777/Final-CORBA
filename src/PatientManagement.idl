@@ -30,7 +30,7 @@ module sop_corba{
 		boolean modifyPatient(in long roomId,in PatientDTO objPatientModified);
 		boolean selectPatient(in long roomId,out PatientDTO objPatientSelected);
 		PatientsListDTO selectAllPatients();
-		boolean sendIndicators(in IndicatorsDTO indicators);
+		boolean sendIndicators(in long roomId,in IndicatorsDTO indicators);
 
 	};
 };

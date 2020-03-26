@@ -82,6 +82,7 @@
                                       <Component id="lblmgsRoomError" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblmgsDateError" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblReply" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
@@ -141,7 +142,9 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lblmgsRoomError" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lblReply" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnCancel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnUpdate" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -235,6 +238,11 @@
         <Component class="javax.swing.JLabel" name="lbl3">
         </Component>
         <Component class="javax.swing.JLabel" name="lbl4">
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblReply">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="jLabel5"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

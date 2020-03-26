@@ -6,6 +6,7 @@
 package clienteHabitacion;
 
 import clienteHabitacion.vistas.RoomGUI;
+import java.awt.Color;
 import org.omg.CORBA.ORB;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
@@ -57,6 +58,8 @@ public class AlertClient
 
             System.out.println("Obtenido el manejador sobre el servidor de objetos: " + ref);
             RoomGUI view = new RoomGUI(ref,href1);
+            view.getLblStatus().setBackground(Color.GREEN);
+            view.getLblStatus().setForeground(Color.green);
             view.setVisible(true);
            
             /* System.out.println("Obtenido el manejador sobre el servidor de objetos: " + ref);

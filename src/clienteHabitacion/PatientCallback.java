@@ -15,7 +15,7 @@ public class PatientCallback extends IPatientCallbackPOA{
 
     @Override
     public String notifyAlert(int roomNumber, String message) {
-        System.out.println(message);
+        
         return message;
     }
 

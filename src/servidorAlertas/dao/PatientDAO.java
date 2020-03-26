@@ -17,7 +17,7 @@ import servidorAlertas.dto.PatientDTO;
  * @author dawish
  */
 public class PatientDAO implements IPatientDAO {
-    private final ConnectionDB connectionDB;
+    private ConnectionDB connectionDB;
         
     public PatientDAO()
     {
@@ -31,8 +31,10 @@ public class PatientDAO implements IPatientDAO {
         int resultado=-1;
         try {            
             PreparedStatement sentencia = null;
-            String consulta = "insert into patient(roomID,name,lastname,birthday) values(?,?,?)";
+            String consulta = "insert into patient(roomID,name,lastname,birthday) values(?,?,?,?)";
+            
             sentencia = this.connectionDB.getConnection().prepareStatement(consulta);
+           
             sentencia.setInt(1, objPatient.roomNumber);
             sentencia.setString(2, objPatient.name);
             sentencia.setString(3, objPatient.lastname);

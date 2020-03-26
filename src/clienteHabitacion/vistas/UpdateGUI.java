@@ -53,6 +53,7 @@ public class UpdateGUI extends javax.swing.JDialog {
         lbl2 = new javax.swing.JLabel();
         lbl3 = new javax.swing.JLabel();
         lbl4 = new javax.swing.JLabel();
+        lblReply = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -94,6 +95,8 @@ public class UpdateGUI extends javax.swing.JDialog {
             }
         });
 
+        lblReply.setText("jLabel5");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -125,7 +128,8 @@ public class UpdateGUI extends javax.swing.JDialog {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblmgsRoomError)
                                     .addComponent(lblmgsDateError)
-                                    .addComponent(jLabel3))
+                                    .addComponent(jLabel3)
+                                    .addComponent(lblReply))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
@@ -171,7 +175,9 @@ public class UpdateGUI extends javax.swing.JDialog {
                     .addComponent(lbl4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblmgsRoomError)
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblReply)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancel)
                     .addComponent(btnUpdate))
@@ -243,12 +249,22 @@ public class UpdateGUI extends javax.swing.JDialog {
                     String fecha2 = f.format(fecha);
 
                     PatientDTO patient = new PatientDTO(this.txtName.getText(), this.txtLastname.getText(), Integer.parseInt(this.txtHabitacion.getText()), fecha2);
-                    RoomGUI.ref.modifyPatient(Integer.parseInt(this.txtHabitacion.getText()),patient);
+                    patient.setPatientClbk(RoomGUI.patient);
+                    boolean reply=RoomGUI.ref.modifyPatient(Integer.parseInt(this.txtHabitacion.getText()),patient);
+               
+                    if (reply) {
+                        clearLabels();
+                        this.lblReply.setForeground(Color.green);
+                        this.lblReply.setText("Paciente actualizado");
+                    }
+                    else{
+                        this.lblReply.setForeground(Color.red);
+                        this.lblReply.setText("Fallido en la actualización: no se contacto el servidor");
+                    }
                 }
             }
 
         } else {
-            System.out.println("clienteHabitacion.vistas.RegisterGUI.btnRegisterActionPerformed()");
             if (this.txtName.getText().length() == 0) {
                 this.lbl1.setForeground(Color.red);
                 this.lbl1.setText("*");
@@ -287,6 +303,7 @@ public class UpdateGUI extends javax.swing.JDialog {
     private javax.swing.JLabel lbl2;
     private javax.swing.JLabel lbl3;
     private javax.swing.JLabel lbl4;
+    private javax.swing.JLabel lblReply;
     private javax.swing.JLabel lblmgsDateError;
     private javax.swing.JLabel lblmgsLastnameError;
     private javax.swing.JLabel lblmgsNameError;

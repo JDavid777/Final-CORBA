@@ -5,8 +5,11 @@
  */
 package clienteHabitacion.vistas;
 
+import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import servidorAlertas.dto.PatientDTO;
+import servidorAlertas.dto.PatientDTOHolder;
 import servidorAlertas.sop_corba.IPatientCallback;
 import servidorAlertas.sop_corba.IPatientManagementOperations;
 
@@ -34,7 +37,16 @@ public class RoomGUI extends javax.swing.JFrame {
     public void setPatient(IPatientCallback patient) {
         this.patient = patient;
     }
-    
+
+    private boolean isNumeric(String parametro) {
+        try {
+            Integer.parseInt(parametro);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -59,12 +71,14 @@ public class RoomGUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         lblPatientName = new javax.swing.JLabel();
         lblPatientLastname = new javax.swing.JLabel();
+        txtFind = new javax.swing.JTextField();
+        btnFind = new javax.swing.JButton();
+        lblMgs = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
         menuRegister = new javax.swing.JMenu();
         menuUpdate = new javax.swing.JMenu();
         menuViewAll = new javax.swing.JMenu();
-        menuFind = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,6 +149,27 @@ public class RoomGUI extends javax.swing.JFrame {
 
         lblPatientLastname.setText("*************");
 
+        txtFind.setFont(new java.awt.Font("Dialog", 2, 10)); // NOI18N
+        txtFind.setText("n° habitación");
+        txtFind.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtFind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFindActionPerformed(evt);
+            }
+        });
+
+        btnFind.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        btnFind.setText("Buscar");
+        btnFind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindActionPerformed(evt);
+            }
+        });
+
+        lblMgs.setFont(new java.awt.Font("Dialog", 2, 8)); // NOI18N
+        lblMgs.setForeground(new java.awt.Color(204, 0, 0));
+        lblMgs.setText("jLabel4");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -162,19 +197,40 @@ public class RoomGUI extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblPatientLastname)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addComponent(jInternalFrame2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addComponent(jInternalFrame2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblMgs)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtFind)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnFind)
+                                .addGap(12, 12, 12)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(lblPatientName))
+                    .addComponent(lblPatientName)
+                    .addComponent(lblMgs))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -190,7 +246,8 @@ public class RoomGUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        lblStatus.setFont(new java.awt.Font("Dialog", 2, 8)); // NOI18N
+        lblStatus.setFont(new java.awt.Font("Dialog", 3, 10)); // NOI18N
+        lblStatus.setForeground(new java.awt.Color(255, 0, 0));
         lblStatus.setText("Conectado");
 
         menuRegister.setText("Registrar");
@@ -216,9 +273,6 @@ public class RoomGUI extends javax.swing.JFrame {
             }
         });
         jMenuBar.add(menuViewAll);
-
-        menuFind.setText("Buscar");
-        jMenuBar.add(menuFind);
 
         setJMenuBar(jMenuBar);
 
@@ -266,6 +320,36 @@ public class RoomGUI extends javax.swing.JFrame {
         listPatients.setVisible(true);// TODO add your handling code here:
     }//GEN-LAST:event_menuViewAllMouseClicked
 
+    private void txtFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindActionPerformed
+      txtFind.setText("");
+       
+    }//GEN-LAST:event_txtFindActionPerformed
+
+    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
+        this.lblMgs.setText("");
+        if (txtFind.getText().length()>0 & txtFind.getText().length()<4 && this.isNumeric(txtFind.getText())) {
+             PatientDTOHolder objPatient = new PatientDTOHolder();
+                    boolean reply=RoomGUI.ref.findPatient(Integer.parseInt(txtFind.getText()), objPatient);
+                    if (reply) {
+                       ViewPatiientGUI dialog = new ViewPatiientGUI(new javax.swing.JFrame(), true);
+                       dialog.getLblName().setText(objPatient.value.name);
+                       dialog.getLblLastname().setText(objPatient.value.lastname);
+                       dialog.getLblBirthday().setText(objPatient.value.birthday);
+                       dialog.getLblRoom().setText(String.valueOf(objPatient.value.roomNumber));
+                       dialog.setVisible(true);
+                       this.lblMgs.setText("");
+                    }
+                    else{
+                       
+                        this.lblMgs.setText("No se encontro el paciente.");
+                    }
+            
+        }
+        else{
+             this.lblMgs.setText("No existe esa habitación.");
+        }
+    }//GEN-LAST:event_btnFindActionPerformed
+
     public JTextArea getJtxtADataOut() {
         return jtxtADataOut;
     }
@@ -292,6 +376,7 @@ public class RoomGUI extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFind;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JInternalFrame jInternalFrame1;
@@ -304,13 +389,14 @@ public class RoomGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jtxtADataOut;
+    private javax.swing.JLabel lblMgs;
     private javax.swing.JLabel lblPatientLastname;
     private javax.swing.JLabel lblPatientName;
     private javax.swing.JLabel lblStatus;
-    private javax.swing.JMenu menuFind;
     private javax.swing.JMenu menuRegister;
     private javax.swing.JMenu menuUpdate;
     private javax.swing.JMenu menuViewAll;
     private javax.swing.JTextArea txtADataIn;
+    private javax.swing.JTextField txtFind;
     // End of variables declaration//GEN-END:variables
 }

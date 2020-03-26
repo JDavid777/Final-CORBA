@@ -27,16 +27,16 @@ public class PatientManagement implements IPatientManagementOperations{
     private INotificationsManagementOperations refNotifiacations;
     private AlertDAO alertDAO;
     private PatientDAO patientDAO;
-
-    public PatientManagement() {
-       this.alertDAO = new AlertDAO();
-       this.patientDAO= new PatientDAO();
+    
+    private void initPOAS(){
+       //alertDAO=new AlertDAO();
+       patientDAO=new PatientDAO();
     }
     @Override
     public boolean registerPatient(PatientDTO objPatient) {
+        this.initPOAS();
         if (objPatient!=null) {
-            System.out.println(objPatient.name);
-            //this.patientDAO.registerPatient(objPatient);
+            this.patientDAO.registerPatient(objPatient);
             return true;
         }
         return false;
@@ -44,7 +44,8 @@ public class PatientManagement implements IPatientManagementOperations{
 
     @Override
     public boolean findPatient(int roomId, PatientDTOHolder objPatient) {
-        if (roomId>99 && roomId <1000) {
+        this.initPOAS();
+        if (objPatient!=null) {
             objPatient.value=this.patientDAO.findPatient(roomId);
             return true;
         }
@@ -53,6 +54,7 @@ public class PatientManagement implements IPatientManagementOperations{
 
     @Override
     public boolean modifyPatient(int roomId,PatientDTO objPatientModified) {
+        this.initPOAS();
         if (objPatientModified!=null) {
              this.patientDAO.modifyPatient(objPatientModified.roomNumber, objPatientModified);
              return true;
@@ -62,6 +64,7 @@ public class PatientManagement implements IPatientManagementOperations{
 
     @Override
     public boolean selectPatient(int roomId, PatientDTOHolder objPatientSelected) {
+        this.initPOAS();
         if (roomId>99 && roomId<1000) {
             objPatientSelected.value=this.patientDAO.selectPatient(roomId);
             return true;
@@ -70,6 +73,7 @@ public class PatientManagement implements IPatientManagementOperations{
     }
     @Override
     public String[] selectAllPatients() {
+        this.initPOAS();
         ArrayList<PatientDTO> patients=this.patientDAO.selectAllPatients();
         String[] patientsList;
         patientsList = (String[])patients.toArray();
@@ -77,7 +81,9 @@ public class PatientManagement implements IPatientManagementOperations{
     }
     
     @Override
-    public boolean sendIndicators(IndicatorsDTO listIndicators) {
+    public boolean sendIndicators(int roomId,IndicatorsDTO listIndicators) {
+        this.initPOAS();
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
