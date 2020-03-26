@@ -12,17 +12,16 @@ import servidorAlertas.sop_corba.IPatientCallback;
 
 public final class PatientDTO implements org.omg.CORBA.portable.IDLEntity
 {
-  public String name = null;
-  public String lastname = null;
-  public int roomNumber = (int)0;
-  public String birthday = null;
-  public servidorAlertas.dto.IndicatorsDTO indicators = null;
-  public servidorAlertas.sop_corba.IPatientCallback patientClbk = null;
+  public String name;
+  public String lastname;
+  public int roomNumber;
+  public String birthday;
+  public servidorAlertas.dto.IndicatorsDTO indicators;
+  public servidorAlertas.sop_corba.IPatientCallback patientClbk;
 
   public PatientDTO ()
   {
   } // ctor
-
   public PatientDTO (String _name, String _lastname, int _roomNumber, String _birthday, servidorAlertas.dto.IndicatorsDTO _indicators, servidorAlertas.sop_corba.IPatientCallback _patientClbk)
   {
     name = _name;
@@ -31,6 +30,15 @@ public final class PatientDTO implements org.omg.CORBA.portable.IDLEntity
     birthday = _birthday;
     indicators = _indicators;
     patientClbk = _patientClbk;
+  } 
+  public PatientDTO (String _name, String _lastname, int _roomNumber, String _birthday)
+  {
+    name = _name;
+    lastname = _lastname;
+    roomNumber = _roomNumber;
+    birthday = _birthday;
+    indicators = new IndicatorsDTO();
+    patientClbk = null;
   } // ctor
 
     public String getName() {

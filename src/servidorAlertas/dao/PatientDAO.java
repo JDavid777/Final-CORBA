@@ -31,7 +31,7 @@ public class PatientDAO implements IPatientDAO {
         int resultado=-1;
         try {            
             PreparedStatement sentencia = null;
-            String consulta = "insert into patient(roomnumberPatient,namePatient,lastnamePatient,birthdaypatient) values(?,?,?)";
+            String consulta = "insert into patient(roomID,name,lastname,birthday) values(?,?,?)";
             sentencia = this.connectionDB.getConnection().prepareStatement(consulta);
             sentencia.setInt(1, objPatient.roomNumber);
             sentencia.setString(2, objPatient.name);
@@ -59,10 +59,10 @@ public class PatientDAO implements IPatientDAO {
             ResultSet reply =sentence.executeQuery();
             if (reply!=null) {
                
-            objPatient.roomNumber=(reply.getInt("roomnumberPatient"));
-            objPatient.name=(reply.getString("namePatient"));
-            objPatient.setLastname(reply.getString("lastnamePatient"));
-            objPatient.setBirthday(reply.getString("birthdayPatient"));
+            objPatient.roomNumber=(reply.getInt("roomID"));
+            objPatient.name=(reply.getString("name"));
+            objPatient.setLastname(reply.getString("lastname"));
+            objPatient.setBirthday(reply.getString("birthday"));
             }
             sentence.close();
             this.connectionDB.disconnect();
@@ -81,8 +81,8 @@ public class PatientDAO implements IPatientDAO {
         int reply=0;
         try {
             PreparedStatement sentence=null;
-            String consult="update patient set roomnumberPatient="+objPatientModified.getRoomNumber()+", namePatient="+objPatientModified.getName()+
-                    ", lastnamePatient="+objPatientModified.getLastname()+", birthdayPatient="+objPatientModified.getBirthday()+" where roomnumber="+roomID+";";
+            String consult="update patient set roomID="+objPatientModified.getRoomNumber()+", name="+objPatientModified.getName()+
+                    ", lastname="+objPatientModified.getLastname()+", birthday="+objPatientModified.getBirthday()+" where roomID="+roomID+";";
             
             sentence=this.connectionDB.getConnection().prepareStatement(consult);
             reply=sentence.executeUpdate();
@@ -105,10 +105,10 @@ public class PatientDAO implements IPatientDAO {
             ResultSet reply= sentence.executeQuery();
             if(reply!=null){
                 
-               objPatient.roomNumber=(reply.getInt("roomnumberPatient"));
-               objPatient.name=(reply.getString("namePatient"));
-               objPatient.setLastname(reply.getString("lastnamePatient"));
-               objPatient.setBirthday(reply.getString("birthdayPatient"));
+               objPatient.roomNumber=(reply.getInt("roomID"));
+               objPatient.name=(reply.getString("name"));
+               objPatient.setLastname(reply.getString("lastname"));
+               objPatient.setBirthday(reply.getString("birthday"));
             }
         }  catch (SQLException e) {
                   System.out.println("error en la inserción: "+e.getMessage());         
@@ -128,10 +128,10 @@ public class PatientDAO implements IPatientDAO {
             ResultSet res = sentencia.executeQuery();
             while(res.next()){
             PatientDTO objPatient= new PatientDTO();
-            objPatient.roomNumber=(res.getInt("roomnumberPatient"));
-            objPatient.name=(res.getString("namePatient"));
-            objPatient.setLastname(res.getString("lastnamePatient"));
-            objPatient.setBirthday(res.getString("birthdayPatient"));
+            objPatient.roomNumber=(res.getInt("roomID"));
+            objPatient.name=(res.getString("name"));
+            objPatient.setLastname(res.getString("lastname"));
+            objPatient.setBirthday(res.getString("birthday"));
             patients.add(objPatient);
             }
             sentencia.close();

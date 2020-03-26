@@ -25,7 +25,7 @@ public class ConnectionDB {
         objConnectionDB=null;
         dbName="DB_Alerts";
         user="root";
-        password="root";
+        password="";
         url = "jdbc:mysql://localhost/"+dbName;
     }
     public ConnectionDB(String dbName,String user, String password) {

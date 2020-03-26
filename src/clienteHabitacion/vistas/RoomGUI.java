@@ -5,6 +5,9 @@
  */
 package clienteHabitacion.vistas;
 
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import servidorAlertas.sop_corba.IPatientCallback;
 import servidorAlertas.sop_corba.IPatientManagementOperations;
 
 /**
@@ -13,14 +16,25 @@ import servidorAlertas.sop_corba.IPatientManagementOperations;
  */
 public class RoomGUI extends javax.swing.JFrame {
 
-     static IPatientManagementOperations server;
+  static IPatientManagementOperations ref;
     /**
-     * Creates new form RoomGUI
-     * 
+     * Creates new form NewJFrame
      */
-    public RoomGUI() {
+    static IPatientCallback patient;
+    public RoomGUI(IPatientManagementOperations ref,IPatientCallback patient) {
         initComponents();
+        RoomGUI.patient=patient;
+        RoomGUI.ref=ref;
     }
+
+    public IPatientCallback getPatient() {
+        return patient;
+    }
+
+    public void setPatient(IPatientCallback patient) {
+        this.patient = patient;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,31 +45,272 @@ public class RoomGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jInternalFrame1 = new javax.swing.JInternalFrame();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtADataIn = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jInternalFrame2 = new javax.swing.JInternalFrame();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtxtADataOut = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblPatientName = new javax.swing.JLabel();
+        lblPatientLastname = new javax.swing.JLabel();
+        lblStatus = new javax.swing.JLabel();
+        jMenuBar = new javax.swing.JMenuBar();
+        menuRegister = new javax.swing.JMenu();
+        menuUpdate = new javax.swing.JMenu();
+        menuViewAll = new javax.swing.JMenu();
+        menuFind = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jInternalFrame1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.black, null, null));
+        jInternalFrame1.setResizable(true);
+        jInternalFrame1.setTitle("Buzon de entrada");
+        jInternalFrame1.setVisible(true);
+
+        txtADataIn.setColumns(20);
+        txtADataIn.setRows(5);
+        jScrollPane1.setViewportView(txtADataIn);
+
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jButton1.setText("Inciar Monitoreo");
+
+        jButton2.setText("Detener Monitoreo");
+
+        jInternalFrame2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.black, null, null));
+        jInternalFrame2.setResizable(true);
+        jInternalFrame2.setTitle("Buzon de salida");
+        jInternalFrame2.setVisible(true);
+
+        jtxtADataOut.setColumns(20);
+        jtxtADataOut.setRows(5);
+        jScrollPane2.setViewportView(jtxtADataOut);
+
+        javax.swing.GroupLayout jInternalFrame2Layout = new javax.swing.GroupLayout(jInternalFrame2.getContentPane());
+        jInternalFrame2.getContentPane().setLayout(jInternalFrame2Layout);
+        jInternalFrame2Layout.setHorizontalGroup(
+            jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jInternalFrame2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jInternalFrame2Layout.setVerticalGroup(
+            jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jInternalFrame2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+        );
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel1.setText("Monitoreo de paciente");
+
+        jLabel2.setText("Paciente: ");
+
+        jLabel3.setText("N° de habitación:");
+
+        lblPatientName.setText("*********************");
+
+        lblPatientLastname.setText("*************");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(293, 293, 293)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblPatientName))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblPatientLastname)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(jInternalFrame2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lblPatientName))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblPatientLastname))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2))
+                    .addComponent(jInternalFrame1)
+                    .addComponent(jInternalFrame2))
+                .addContainerGap())
+        );
+
+        lblStatus.setFont(new java.awt.Font("Dialog", 2, 8)); // NOI18N
+        lblStatus.setText("Conectado");
+
+        menuRegister.setText("Registrar");
+        menuRegister.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuRegisterMouseClicked(evt);
+            }
+        });
+        jMenuBar.add(menuRegister);
+
+        menuUpdate.setText("Actualizar");
+        menuUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuUpdateMouseClicked(evt);
+            }
+        });
+        jMenuBar.add(menuUpdate);
+
+        menuViewAll.setText("Ver todos");
+        menuViewAll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuViewAllMouseClicked(evt);
+            }
+        });
+        jMenuBar.add(menuViewAll);
+
+        menuFind.setText("Buscar");
+        jMenuBar.add(menuFind);
+
+        setJMenuBar(jMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 837, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblStatus)
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 327, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblStatus)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void menuRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRegisterMouseClicked
+ 
+        RegisterGUI vRegister = new RegisterGUI(new javax.swing.JFrame(), true);
+        vRegister.setVisible(true);
+        
+            }//GEN-LAST:event_menuRegisterMouseClicked
 
-    public static IPatientManagementOperations getServer() {
-        return server;
+    private void menuUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuUpdateMouseClicked
+        
+        UpdateGUI vUpdate = new UpdateGUI(new javax.swing.JFrame(), true);// TODO add your handling code here:
+        vUpdate.setVisible(true);
+    }//GEN-LAST:event_menuUpdateMouseClicked
+
+    private void menuViewAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuViewAllMouseClicked
+        ViewAllGUI listPatients = new ViewAllGUI(new javax.swing.JFrame(), true);
+        listPatients.setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_menuViewAllMouseClicked
+
+    public JTextArea getJtxtADataOut() {
+        return jtxtADataOut;
     }
 
-    public static void setServer(IPatientManagementOperations server) {
-        RoomGUI.server = server;
+    public void setJtxtADataOut(JTextArea jtxtADataOut) {
+        this.jtxtADataOut = jtxtADataOut;
     }
+
+    public JLabel getLblStatus() {
+        return lblStatus;
+    }
+
+    public void setLblStatus(JLabel lblStatus) {
+        this.lblStatus = lblStatus;
+    }
+
+    public JTextArea getTxtADataIn() {
+        return txtADataIn;
+    }
+
+    public void setTxtADataIn(JTextArea txtADataIn) {
+        this.txtADataIn = txtADataIn;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JInternalFrame jInternalFrame2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jtxtADataOut;
+    private javax.swing.JLabel lblPatientLastname;
+    private javax.swing.JLabel lblPatientName;
+    private javax.swing.JLabel lblStatus;
+    private javax.swing.JMenu menuFind;
+    private javax.swing.JMenu menuRegister;
+    private javax.swing.JMenu menuUpdate;
+    private javax.swing.JMenu menuViewAll;
+    private javax.swing.JTextArea txtADataIn;
     // End of variables declaration//GEN-END:variables
 }

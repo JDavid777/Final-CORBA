@@ -57,7 +57,7 @@ public class SensorReading extends Thread {
                 temperatura = r1.nextInt((40) + 35); //TODO GENERAR CON DECIMALES
                 saturacionOxigeno = 80; //TODO revisar*/
                 indicadores = new IndicatorsDTO(frecuenciaCardiaca, tensionArterialSistolica, tensionArterialDiastolica, frecuenciaRespiratoria, temperatura, saturacionOxigeno);
-                String resultadoLectura = " \nEnviando Indicadores..."
+               /* String resultadoLectura = " \nEnviando Indicadores..."
                 + "\nFrecuencia cardiaca: " + indicadores.cardiacFrequency
                 + "\n Presión arterial sistolica: " + indicadores.systolicBloodPressure
                 + "\n Presion arterial diastolica: " + indicadores.diastolicBloodpressure
@@ -70,7 +70,7 @@ public class SensorReading extends Thread {
                 ventana.getjTextNotifiacion().append(resultadoLectura);
                 ventana.getjTextNotifiacion().append("\n_________________________________________");
                 
-                //  ventana.getServidor().enviarIndicadores(Integer.parseInt(ventana.getTxtHabitacion().getText()), indicadores);
+                //  ventana.getServidor().enviarIndicadores(Integer.parseInt(ventana.getTxtHabitacion().getText()), indicadores);*/
                 
                 Thread.sleep(8 * 1000);
                 

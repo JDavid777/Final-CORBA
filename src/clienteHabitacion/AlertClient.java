@@ -56,21 +56,9 @@ public class AlertClient
             ref = IPatientManagementHelper.narrow(ncRef.resolve_str(name));
 
             System.out.println("Obtenido el manejador sobre el servidor de objetos: " + ref);
-            RoomGUI.setServer(ref);
-//            RoomGUI view = new RoomGUI();
-//            view.setVisible(true);
-            if (href1!=null) {
-                 PatientDTO patient=new PatientDTO("","",123,"",new IndicatorsDTO(0.0,0.0,0.0,0.0,0.0,0.0),href1);
-            patient.name="Coma mierda";
-            if (patient!=null && ref!=null) {
-                System.out.println("La gonorrea no es nula");
-                boolean registerPatient = ref.registerPatient(patient);
-            }
-            }
+            RoomGUI view = new RoomGUI(ref,href1);
+            view.setVisible(true);
            
-            else{
-                System.out.println("La gonorrea es nula");
-            }
             /* System.out.println("Obtenido el manejador sobre el servidor de objetos: " + ref);
             int numHabitacion;
             int rta = 0;

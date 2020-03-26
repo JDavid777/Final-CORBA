@@ -35,7 +35,8 @@ public class PatientManagement implements IPatientManagementOperations{
     @Override
     public boolean registerPatient(PatientDTO objPatient) {
         if (objPatient!=null) {
-            this.patientDAO.registerPatient(objPatient);
+            System.out.println(objPatient.name);
+            //this.patientDAO.registerPatient(objPatient);
             return true;
         }
         return false;
