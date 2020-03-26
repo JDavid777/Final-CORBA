@@ -1,0 +1,36 @@
+module sop_corba{
+
+	interface IPatientCallback{
+		string notifyAlert(in long roomNumber,in string message);
+	};
+
+	interface IPatientManagement{
+
+		struct IndicatorsDTO{
+			double cardiacFrequency;
+			double systolicBloodPressure;
+			double diastolicBloodpressure;
+			double breathingFrequency;
+			double oxigenSaturation;
+			double temperature;
+			
+		};
+
+		struct PatientDTO{
+			string name;
+			string lastname;
+			long roomNumber;
+			string birthday;
+			IndicatorsDTO indicators;
+			IPatientCallback patientClbk;
+		};
+		typedef sequence<string> PatientsListDTO;
+		boolean registerPatient(in PatientDTO objPatient);
+		boolean findPatient(in long roomId,out PatientDTO objPatient);
+		boolean modifyPatient(in long roomId,in PatientDTO objPatientModified);
+		boolean selectPatient(in long roomId,out PatientDTO objPatientSelected);
+		PatientsListDTO selectAllPatients();
+		boolean sendIndicators(in IndicatorsDTO indicators);
+
+	};
+};

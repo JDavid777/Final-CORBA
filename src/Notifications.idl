@@ -1,0 +1,25 @@
+module sop_corba{
+	interface INotificationsManagement{
+
+		struct IndicatorsDTO{
+		 double cardiacFrequency;
+		 double systolicBloodPressure;
+		 double diastolicBloodpressure;
+		 double breathingFrequency;
+		 double oxigenSaturation;
+		 double temperature;
+		};
+		struct NotificationDTO{
+		 string name;
+		 string lastname;
+		 long roomNumber;
+		 string age;
+		 string message;
+		 IndicatorsDTO indicators;
+
+		};
+		boolean notifyAlert(in NotificationDTO objNotification);
+		
+
+	};
+};
