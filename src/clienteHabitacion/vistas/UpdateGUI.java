@@ -5,10 +5,12 @@
  */
 package clienteHabitacion.vistas;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JTextField;
 import servidorAlertas.dto.PatientDTO;
 
 /**
@@ -23,6 +25,22 @@ public class UpdateGUI extends javax.swing.JDialog {
     public UpdateGUI(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+
+    public JDateChooser getjDataBirthday() {
+        return jDataBirthday;
+    }
+
+    public JTextField getTxtHabitacion() {
+        return txtHabitacion;
+    }
+
+    public JTextField getTxtLastname() {
+        return txtLastname;
+    }
+
+    public JTextField getTxtName() {
+        return txtName;
     }
 
     /**
@@ -203,7 +221,12 @@ public class UpdateGUI extends javax.swing.JDialog {
         this.lblmgsRoomError.setText("");
         this.lblmgsDateError.setText("");
     }
-
+  private void clearAll(){
+      clearLabels();
+      this.txtHabitacion.setText("");
+      this.txtLastname.setText("");
+      this.txtName.setText("");
+  }
     private boolean isNumeric(String parametro) {
         try {
             Integer.parseInt(parametro);
@@ -255,11 +278,12 @@ public class UpdateGUI extends javax.swing.JDialog {
                     if (reply) {
                         clearLabels();
                         this.lblReply.setForeground(Color.green);
+                        this.clearAll();
                         this.lblReply.setText("Paciente actualizado");
                     }
                     else{
                         this.lblReply.setForeground(Color.red);
-                        this.lblReply.setText("Fallido en la actualización: no se contacto el servidor");
+                        this.lblReply.setText("Fallido en la actualización");
                     }
                 }
             }

@@ -84,10 +84,14 @@ public class PatientManagement implements IPatientManagementOperations{
     @Override
     public String[] selectAllPatients() {
         this.initPOAS();
+            System.out.println("Consultando lista de pacientes...");
         ArrayList<PatientDTO> patients=this.patientDAO.selectAllPatients();
-        String[] patientsList;
-        patientsList = (String[])patients.toArray();
-        System.out.println("Consultando lista de pacientes...");
+        String[] patientsList= new String[patients.size()];
+        System.out.println(patients.size());
+        for (int i = 0; i < patients.size(); i++) {
+            patientsList[i]=patients.get(i).toString();
+        }
+    
       return patientsList;
     }
     
@@ -95,7 +99,7 @@ public class PatientManagement implements IPatientManagementOperations{
     public boolean sendIndicators(int roomId,IndicatorsDTO listIndicators) {
         this.initPOAS();
         
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     public void getRefRemoteNotificationserver(String IpNS,String portNS){

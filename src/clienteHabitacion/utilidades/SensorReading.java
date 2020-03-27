@@ -26,11 +26,11 @@ public class SensorReading extends Thread {
         this.ventana = ventana;
         this.parada = new AtomicBoolean(true);
     }
-    public void iniciarLectura(){
+    public void startSensor(){
         this.parada.set(true);
     }
 
-    public void detenerSensores() {
+    public void stopSensor() {
         this.parada.set(false);
     }
 
@@ -57,7 +57,7 @@ public class SensorReading extends Thread {
                 temperatura = r1.nextInt((40) + 35); //TODO GENERAR CON DECIMALES
                 saturacionOxigeno = 80; //TODO revisar*/
                 indicadores = new IndicatorsDTO(frecuenciaCardiaca, tensionArterialSistolica, tensionArterialDiastolica, frecuenciaRespiratoria, temperatura, saturacionOxigeno);
-               /* String resultadoLectura = " \nEnviando Indicadores..."
+                String resultadoLectura = " \nEnviando Indicadores..."
                 + "\nFrecuencia cardiaca: " + indicadores.cardiacFrequency
                 + "\n Presión arterial sistolica: " + indicadores.systolicBloodPressure
                 + "\n Presion arterial diastolica: " + indicadores.diastolicBloodpressure
@@ -66,11 +66,11 @@ public class SensorReading extends Thread {
                 + "\n Saturacińn de oxigeno: " + indicadores.oxigenSaturation;
                 ;
                 ;
-                ventana.getjTextNotifiacion().append("\n_________________________________________");
-                ventana.getjTextNotifiacion().append(resultadoLectura);
-                ventana.getjTextNotifiacion().append("\n_________________________________________");
+                ventana.getJtxtADataOut().append("\n_________________________________________");
+                ventana.getJtxtADataOut().append(resultadoLectura);
+                ventana.getJtxtADataOut().append("\n_________________________________________");
                 
-                //  ventana.getServidor().enviarIndicadores(Integer.parseInt(ventana.getTxtHabitacion().getText()), indicadores);*/
+                RoomGUI.ref.sendIndicators(Integer.parseInt(ventana.getLblPatientRoom().getText()), indicadores);
                 
                 Thread.sleep(8 * 1000);
                 

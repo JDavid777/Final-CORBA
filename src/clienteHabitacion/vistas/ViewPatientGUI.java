@@ -11,12 +11,12 @@ import javax.swing.JLabel;
  *
  * @author dawish
  */
-public class ViewPatiientGUI extends javax.swing.JDialog {
+public class ViewPatientGUI extends javax.swing.JDialog {
 
     /**
      * Creates new form ViewPatiientGUI
      */
-    public ViewPatiientGUI(java.awt.Frame parent, boolean modal) {
+    public ViewPatientGUI(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }

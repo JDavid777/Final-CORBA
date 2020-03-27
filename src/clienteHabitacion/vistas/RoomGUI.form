@@ -91,8 +91,8 @@
                           <Component id="jInternalFrame1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jButton1" min="-2" pref="169" max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnStart" min="-2" pref="169" max="-2" attributes="0"/>
+                              <Component id="btnStop" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
@@ -110,7 +110,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="lblPatientLastname" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblPatientRoom" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -165,14 +165,14 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblPatientLastname" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblPatientRoom" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="46" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnStart" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnStop" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jInternalFrame1" max="32767" attributes="0"/>
                       <Component id="jInternalFrame2" alignment="0" max="32767" attributes="0"/>
@@ -236,15 +236,21 @@
             </Container>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnStart">
           <Properties>
             <Property name="text" type="java.lang.String" value="Inciar Monitoreo"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStartActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="btnStop">
           <Properties>
             <Property name="text" type="java.lang.String" value="Detener Monitoreo"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStopActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JInternalFrame" name="jInternalFrame2">
           <Properties>
@@ -322,7 +328,7 @@
             <Property name="text" type="java.lang.String" value="*********************"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblPatientLastname">
+        <Component class="javax.swing.JLabel" name="lblPatientRoom">
           <Properties>
             <Property name="text" type="java.lang.String" value="*************"/>
           </Properties>

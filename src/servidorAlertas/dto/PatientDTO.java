@@ -89,4 +89,9 @@ public final class PatientDTO implements org.omg.CORBA.portable.IDLEntity
         this.patientClbk = patientClbk;
     }
 
+    @Override
+    public String toString() {
+        return name + ","+ lastname + "," + roomNumber + "," + birthday + "," + indicators + "," + patientClbk;
+    }
+
 } // class PatientDTO

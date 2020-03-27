@@ -234,6 +234,12 @@ public class RegisterGUI extends javax.swing.JDialog {
         this.lbl3.setText("");
         this.lbl4.setText("");
     }
+  private void clearAll(){
+      clearLabels();
+      this.txtHabitacion.setText("");
+      this.txtLastname.setText("");
+      this.txtName.setText("");
+  }
 
     private boolean isNumeric(String parametro) {
         try {
@@ -284,6 +290,7 @@ public class RegisterGUI extends javax.swing.JDialog {
                     if (reply) {
                         clearLabels();
                         this.lblReply.setForeground(Color.green);
+                        this.clearAll();
                         this.lblReply.setText("Registro exitoso");
                     }
                     else{

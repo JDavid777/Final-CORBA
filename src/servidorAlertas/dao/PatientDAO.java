@@ -87,13 +87,18 @@ public class PatientDAO implements IPatientDAO {
         int reply=0;
         try {
             PreparedStatement sentence=null;
-            String consult="update patient set roomID="+objPatientModified.getRoomNumber()+", name="+objPatientModified.getName()+
-                    ", lastname="+objPatientModified.getLastname()+", birthday="+objPatientModified.getBirthday()+" where roomID="+roomID+";";
+            String consult="update patient set roomID=?,name=?,lastname=?,birthday=? where roomID=?";
             
             sentence=this.connectionDB.getConnection().prepareStatement(consult);
+             sentence.setInt(1, objPatientModified.roomNumber);
+            sentence.setString(2, objPatientModified.name);
+            sentence.setString(3, objPatientModified.lastname);
+            sentence.setString(4, objPatientModified.birthday);
+            sentence.setInt(5, objPatientModified.roomNumber);
             reply=sentence.executeUpdate();
             sentence.close();
             this.connectionDB.disconnect();
+            System.out.println("servidorAlertas.dao.PatientDAO.modifyPatient()");
         } catch (SQLException e) {
                   System.out.println("error en la inserción: "+e.getMessage());         
         }

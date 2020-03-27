@@ -7,6 +7,8 @@ package clienteHabitacion.vistas;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JTable;
+import servidorAlertas.dto.PatientDTO;
 
 /**
  *
@@ -14,15 +16,31 @@ import java.awt.event.MouseEvent;
  */
 public class ViewAllGUI extends javax.swing.JDialog {
 
+    private int numberElements = 0;
     /**
      * Creates new form ViewAllGUI
      */
-    public ViewAllGUI(java.awt.Frame parent, boolean modal) {
+    private RoomGUI parent;
+    private UpdateGUI updategui;
+
+    public ViewAllGUI(RoomGUI parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        this.parent = parent;
+        this.updategui= new UpdateGUI(parent, modal);
     }
 
+    public JTable getTblPatients() {
+        return tblPatients;
+    }
+
+    public int getNumberElements() {
+        return numberElements;
+    }
+
+    public void setNumberElements(int numberElements) {
+        this.numberElements = numberElements;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,6 +67,12 @@ public class ViewAllGUI extends javax.swing.JDialog {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -56,7 +80,7 @@ public class ViewAllGUI extends javax.swing.JDialog {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -70,17 +94,17 @@ public class ViewAllGUI extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tblPatients.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                tblPatientsMouseMoved(evt);
+        tblPatients.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPatientsMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblPatients);
 
         btnSelect.setText("Seleccionar");
-        btnSelect.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelectActionPerformed(evt);
+        btnSelect.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSelectMouseClicked(evt);
             }
         });
 
@@ -92,9 +116,9 @@ public class ViewAllGUI extends javax.swing.JDialog {
         });
 
         btnEdit.setText("Editar");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
+        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditMouseClicked(evt);
             }
         });
 
@@ -123,8 +147,8 @@ public class ViewAllGUI extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSelect)
                     .addComponent(btnCancel)
@@ -135,25 +159,67 @@ public class ViewAllGUI extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblPatientsMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPatientsMouseMoved
-         int row = tblPatients.rowAtPoint(evt.getPoint());
-         tblPatients.getSelectionModel().setSelectionInterval(0,3);
-         
-    }//GEN-LAST:event_tblPatientsMouseMoved
-
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-    this.setVisible(false);        // TODO add your handling code here:
+        this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSelectActionPerformed
+    private void tblPatientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPatientsMouseClicked
+        int row = tblPatients.rowAtPoint(evt.getPoint());
+        if (evt.getClickCount() == 2 && !evt.isConsumed() && row < this.numberElements) {
+            evt.consume();
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+            PatientDTO patient = new PatientDTO((String) tblPatients.getValueAt(row, 0), (String) tblPatients.getValueAt(row, 1), Integer.parseInt(tblPatients.getValueAt(row, 2).toString()), tblPatients.getValueAt(row, 3).toString());
+            RoomGUI.actualPatient = patient;
+            this.parent.getLblPatientName().setText(patient.name + " " + patient.lastname);
+            this.parent.getLblPatientRoom().setText(String.valueOf(patient.roomNumber));
+            this.setVisible(false);
+            this.parent.getBtnStart().setEnabled(true);
+        }
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditActionPerformed
+    }//GEN-LAST:event_tblPatientsMouseClicked
+private void updateTable(){
+    String[] listpatients = RoomGUI.ref.selectAllPatients();
+    this.numberElements=0;
+        for (int i = 0; i < listpatients.length; i++) {
+            String[] patient = listpatients[i].split(",");
+            for (int j = 0; j < patient.length - 2; j++) {
+                this.getTblPatients().setValueAt(patient[0], i, 0);
+                this.getTblPatients().setValueAt(patient[1], i, 1);
+                this.getTblPatients().setValueAt(patient[2], i, 2);
+                this.getTblPatients().setValueAt(patient[3], i, 3);
+            }
+        }
+        this.setNumberElements(listpatients.length);
+}
+    private void btnSelectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSelectMouseClicked
 
-   
+        int row = -1;
+        row = tblPatients.getSelectedRow();
+        if (row >= 0 && row < this.numberElements) {
+            PatientDTO patient = new PatientDTO((String) tblPatients.getValueAt(row, 0), (String) tblPatients.getValueAt(row, 1), Integer.parseInt(tblPatients.getValueAt(row, 2).toString()), tblPatients.getValueAt(row, 3).toString());
+            RoomGUI.actualPatient = patient;
+            this.parent.getLblPatientName().setText(patient.name + " " + patient.lastname);
+            this.parent.getLblPatientRoom().setText(String.valueOf(patient.roomNumber));
+            this.setVisible(false);
+            this.parent.getBtnStart().setEnabled(true);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSelectMouseClicked
+
+    private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
+        int row = -1;
+        row = tblPatients.getSelectedRow();
+        if (row >= 0 && row < this.numberElements) {
+            this.updategui.getTxtHabitacion().setText(tblPatients.getValueAt(row, 2).toString());
+            this.updategui.getTxtName().setText(tblPatients.getValueAt(row, 0).toString());
+            this.updategui.getTxtLastname().setText(tblPatients.getValueAt(row, 1).toString());
+            this.updategui.getjDataBirthday().setDateFormatString(tblPatients.getValueAt(row, 3).toString());
+            this.updategui.setVisible(true);
+            this.updategui.setVisible(false);
+           this.updateTable();
+            this.parent.getBtnStart().setEnabled(true);
+        }     
+    }//GEN-LAST:event_btnEditMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
