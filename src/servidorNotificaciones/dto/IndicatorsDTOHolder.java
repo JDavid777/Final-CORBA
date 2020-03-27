@@ -9,7 +9,7 @@ package servidorNotificaciones.dto;
 
 public final class IndicatorsDTOHolder implements org.omg.CORBA.portable.Streamable
 {
-  public servidorNotificaciones.dto.IndicatorsDTO value = null;
+  public servidorNotificaciones.dto.IndicatorsDTO value;
 
   public IndicatorsDTOHolder ()
   {

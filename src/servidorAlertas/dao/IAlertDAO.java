@@ -21,5 +21,5 @@ public interface IAlertDAO {
 
     public boolean registerAlert(AlertDTO objAlert);   
    
-    public ArrayList<AlertDTO> selectAlerts(int numAlerts);
+    public ArrayList<AlertDTO> selectAlerts(int roomid,int numAlerts);
 }

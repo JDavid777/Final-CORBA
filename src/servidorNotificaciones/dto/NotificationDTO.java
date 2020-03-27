@@ -1,5 +1,7 @@
 package servidorNotificaciones.dto;
 
+import java.util.ArrayList;
+
 
 /**
 * servidorNotificaciones/sop_corba/INotificationsManagementPackage/NotificationDTO.java .
@@ -10,12 +12,12 @@ package servidorNotificaciones.dto;
 
 public final class NotificationDTO implements org.omg.CORBA.portable.IDLEntity
 {
-  public String name = null;
-  public String lastname = null;
+  public String name ;
+  public String lastname;
   public int roomNumber = (int)0;
-  public String age = null;
-  public String message = null;
-  public servidorNotificaciones.dto.IndicatorsDTO indicators = null;
+  public String age;
+  public String message ;
+  public servidorNotificaciones.dto.IndicatorsDTO indicators ;
 
   public NotificationDTO ()
   {
@@ -30,5 +32,9 @@ public final class NotificationDTO implements org.omg.CORBA.portable.IDLEntity
     message = _message;
     indicators = _indicators;
   } // ctor
+
+    public NotificationDTO(String toString, String toString0, String toString1, String toString2, String toString3, String toString4, String toString5, ArrayList<String> indicadoresAlerta, ArrayList<String> ultimasCincoAlertas) {
+        System.out.println(toString);
+    }
 
 } // class NotificationDTO

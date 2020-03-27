@@ -21,27 +21,27 @@ import servidorAlertas.sop_corba.IPatientManagementOperations;
  */
 public class RoomGUI extends javax.swing.JFrame {
 
-    public static IPatientManagementOperations ref;
+    public  IPatientManagementOperations ref;
 
     /**
      * Creates new form NewJFrame
      */
-    static IPatientCallback patient;
-    static PatientDTO actualPatient;
+    public IPatientCallback patientCallback;
+    public PatientDTO actualPatient;
     SensorReading objLecturaSensores;
 
     public RoomGUI(IPatientManagementOperations ref, IPatientCallback patient) {
         initComponents();
-        RoomGUI.patient = patient;
-        RoomGUI.ref = ref;
+        this.patientCallback = patient;
+        this.ref = ref;
     }
 
-    public IPatientCallback getPatient() {
-        return patient;
+    public IPatientCallback getPatientCallback() {
+        return patientCallback;
     }
 
-    public void setPatient(IPatientCallback patient) {
-        this.patient = patient;
+    public void setPatientCallback(IPatientCallback patientCallback) {
+        this.patientCallback = patientCallback;
     }
 
     private boolean isNumeric(String parametro) {
@@ -101,7 +101,9 @@ public class RoomGUI extends javax.swing.JFrame {
         jInternalFrame1.setTitle("Buzon de entrada");
         jInternalFrame1.setVisible(true);
 
+        txtADataIn.setBackground(new java.awt.Color(194, 220, 234));
         txtADataIn.setColumns(20);
+        txtADataIn.setFont(new java.awt.Font("Liberation Serif", 1, 12)); // NOI18N
         txtADataIn.setRows(5);
         jScrollPane1.setViewportView(txtADataIn);
 
@@ -141,7 +143,10 @@ public class RoomGUI extends javax.swing.JFrame {
         jInternalFrame2.setTitle("Buzon de salida");
         jInternalFrame2.setVisible(true);
 
+        jtxtADataOut.setBackground(new java.awt.Color(194, 220, 234));
         jtxtADataOut.setColumns(20);
+        jtxtADataOut.setFont(new java.awt.Font("Liberation Serif", 1, 12)); // NOI18N
+        jtxtADataOut.setForeground(new java.awt.Color(0, 0, 0));
         jtxtADataOut.setRows(5);
         jScrollPane2.setViewportView(jtxtADataOut);
 
@@ -169,8 +174,10 @@ public class RoomGUI extends javax.swing.JFrame {
 
         jLabel3.setText("N° de habitación:");
 
+        lblPatientName.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
         lblPatientName.setText("*********************");
 
+        lblPatientRoom.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
         lblPatientRoom.setText("*************");
 
         txtFind.setFont(new java.awt.Font("Dialog", 2, 10)); // NOI18N
@@ -192,7 +199,6 @@ public class RoomGUI extends javax.swing.JFrame {
 
         lblMgs.setFont(new java.awt.Font("Dialog", 2, 8)); // NOI18N
         lblMgs.setForeground(new java.awt.Color(204, 0, 0));
-        lblMgs.setText("jLabel4");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -328,27 +334,30 @@ public class RoomGUI extends javax.swing.JFrame {
 
     private void menuRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRegisterMouseClicked
 
-        RegisterGUI vRegister = new RegisterGUI(new javax.swing.JFrame(), true);
+        RegisterGUI vRegister = new RegisterGUI(this, true);
         vRegister.setVisible(true);
 
             }//GEN-LAST:event_menuRegisterMouseClicked
 
     private void menuUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuUpdateMouseClicked
 
-        UpdateGUI vUpdate = new UpdateGUI(new javax.swing.JFrame(), true);// TODO add your handling code here:
+        UpdateGUI vUpdate = new UpdateGUI(this, true);// TODO add your handling code here:
         vUpdate.setVisible(true);
     }//GEN-LAST:event_menuUpdateMouseClicked
 
     private void menuViewAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuViewAllMouseClicked
         ViewAllGUI listPatients = new ViewAllGUI(this, true);
-        String[] listpatients = RoomGUI.ref.selectAllPatients();
+        String[] listpatients = this.ref.selectAllPatients(this.patientCallback);
+        
         for (int i = 0; i < listpatients.length; i++) {
-            String[] patient = listpatients[i].split(",");
-            for (int j = 0; j < patient.length - 2; j++) {
-                listPatients.getTblPatients().setValueAt(patient[0], i, 0);
-                listPatients.getTblPatients().setValueAt(patient[1], i, 1);
-                listPatients.getTblPatients().setValueAt(patient[2], i, 2);
-                listPatients.getTblPatients().setValueAt(patient[3], i, 3);
+            String[] objPatient = listpatients[i].split(",");
+         System.out.println(listpatients);
+            for (int j = 0; j < objPatient.length - 1; j++) {
+                            
+                listPatients.getTblPatients().setValueAt(objPatient[0], i, 0);
+                listPatients.getTblPatients().setValueAt(objPatient[1], i, 1);
+                listPatients.getTblPatients().setValueAt(objPatient[2], i, 2);
+                listPatients.getTblPatients().setValueAt(objPatient[3], i, 3);
             }
         }
         listPatients.setNumberElements(listpatients.length);
@@ -364,7 +373,7 @@ public class RoomGUI extends javax.swing.JFrame {
         this.lblMgs.setText("");
         if (txtFind.getText().length() > 0 & txtFind.getText().length() < 4 && this.isNumeric(txtFind.getText())) {
             PatientDTOHolder objPatientHolder = new PatientDTOHolder();
-            boolean reply = RoomGUI.ref.findPatient(Integer.parseInt(txtFind.getText()), objPatientHolder);
+            boolean reply = this.ref.findPatient(Integer.parseInt(txtFind.getText()), objPatientHolder);
             if (reply) {
                 ViewPatientGUI dialog = new ViewPatientGUI(new javax.swing.JFrame(), true);
                 PatientDTO objPatient = objPatientHolder.value;
@@ -386,7 +395,7 @@ public class RoomGUI extends javax.swing.JFrame {
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
 
-        if (patient != null) {
+        if (patientCallback != null) {
             if (objLecturaSensores != null) {
                 Thread t = new Thread(objLecturaSensores); // .___.
                 t.start();

@@ -7,6 +7,9 @@ package clienteHabitacion.vistas;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JTable;
 import servidorAlertas.dto.PatientDTO;
 
@@ -169,7 +172,8 @@ public class ViewAllGUI extends javax.swing.JDialog {
             evt.consume();
 
             PatientDTO patient = new PatientDTO((String) tblPatients.getValueAt(row, 0), (String) tblPatients.getValueAt(row, 1), Integer.parseInt(tblPatients.getValueAt(row, 2).toString()), tblPatients.getValueAt(row, 3).toString());
-            RoomGUI.actualPatient = patient;
+             patient.setPatientClbk(this.parent.patientCallback);
+            this.parent.actualPatient = patient;
             this.parent.getLblPatientName().setText(patient.name + " " + patient.lastname);
             this.parent.getLblPatientRoom().setText(String.valueOf(patient.roomNumber));
             this.setVisible(false);
@@ -178,7 +182,7 @@ public class ViewAllGUI extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_tblPatientsMouseClicked
 private void updateTable(){
-    String[] listpatients = RoomGUI.ref.selectAllPatients();
+    String[] listpatients = this.parent.ref.selectAllPatients(this.parent.getPatientCallback());
     this.numberElements=0;
         for (int i = 0; i < listpatients.length; i++) {
             String[] patient = listpatients[i].split(",");
@@ -197,7 +201,9 @@ private void updateTable(){
         row = tblPatients.getSelectedRow();
         if (row >= 0 && row < this.numberElements) {
             PatientDTO patient = new PatientDTO((String) tblPatients.getValueAt(row, 0), (String) tblPatients.getValueAt(row, 1), Integer.parseInt(tblPatients.getValueAt(row, 2).toString()), tblPatients.getValueAt(row, 3).toString());
-            RoomGUI.actualPatient = patient;
+           patient.setPatientClbk(this.parent.patientCallback);
+            this.parent.actualPatient = patient;
+            
             this.parent.getLblPatientName().setText(patient.name + " " + patient.lastname);
             this.parent.getLblPatientRoom().setText(String.valueOf(patient.roomNumber));
             this.setVisible(false);
@@ -209,10 +215,12 @@ private void updateTable(){
         int row = -1;
         row = tblPatients.getSelectedRow();
         if (row >= 0 && row < this.numberElements) {
+             Date fecha = new Date(tblPatients.getValueAt(row, 3).toString());
+       
             this.updategui.getTxtHabitacion().setText(tblPatients.getValueAt(row, 2).toString());
             this.updategui.getTxtName().setText(tblPatients.getValueAt(row, 0).toString());
             this.updategui.getTxtLastname().setText(tblPatients.getValueAt(row, 1).toString());
-            this.updategui.getjDataBirthday().setDateFormatString(tblPatients.getValueAt(row, 3).toString());
+            this.updategui.getjDataBirthday().setDate(fecha);
             this.updategui.setVisible(true);
             this.updategui.setVisible(false);
            this.updateTable();

@@ -5,24 +5,30 @@
  */
 package servidorAlertas.dto;
 
+import java.sql.Date;
+import java.util.ArrayList;
+
 /**
  *
  * @author dawish
  */
 public class AlertDTO {
+
     private int roomNum;
-    private String alertDate;
-    private String alertHour;
+    private Date alertDate;
     private int puntuation;
 
     public AlertDTO() {
     }
 
-    public AlertDTO(int roomNum, String alertDate, String alertHour, int puntuation) {
+    public AlertDTO(int roomNum, int puntuation) {
         this.roomNum = roomNum;
-        this.alertDate = alertDate;
-        this.alertHour = alertHour;
+        this.alertDate = null;
         this.puntuation = puntuation;
+    }
+
+    public AlertDTO(String toString, String toString0, String toString1, String toString2, String toString3, String toString4, String toString5, ArrayList<String> indicadoresAlerta, ArrayList<String> ultimasCincoAlertas) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getRoomNum() {
@@ -33,20 +39,12 @@ public class AlertDTO {
         this.roomNum = roomNum;
     }
 
-    public String getAlertDate() {
+    public Date getAlertDate() {
         return alertDate;
     }
 
-    public void setAlertDate(String alertDate) {
+    public void setAlertDate(Date alertDate) {
         this.alertDate = alertDate;
-    }
-
-    public String getAlertHour() {
-        return alertHour;
-    }
-
-    public void setAlertHour(String alertHour) {
-        this.alertHour = alertHour;
     }
 
     public int getPuntuation() {
@@ -56,6 +54,5 @@ public class AlertDTO {
     public void setPuntuation(int puntuation) {
         this.puntuation = puntuation;
     }
-    
-    
+
 }

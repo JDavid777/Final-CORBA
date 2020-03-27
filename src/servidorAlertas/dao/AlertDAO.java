@@ -5,6 +5,9 @@
  */
 package servidorAlertas.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import servidorAlertas.conection.ConnectionDB;
 import servidorAlertas.dto.AlertDTO;
@@ -15,23 +18,63 @@ import servidorAlertas.dto.PatientDTOHolder;
  *
  * @author dawish
  */
-public class AlertDAO implements IAlertDAO{
-    
-     private final ConnectionDB connectionDB;
+public class AlertDAO implements IAlertDAO {
+
+    private final ConnectionDB connectionDB;
 
     public AlertDAO() {
         this.connectionDB = new ConnectionDB();
     }
-     
 
     @Override
     public boolean registerAlert(AlertDTO objAlert) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.connectionDB.connect();
+        int resultado = -1;
+        try {
+            PreparedStatement sentencia = null;
+            String consulta = "insert INTO alerts (roomIDAlert,score)values(?,?)";
+
+            sentencia = this.connectionDB.getConnection().prepareStatement(consulta);
+
+            sentencia.setInt(1, objAlert.getRoomNum());
+            sentencia.setInt(2, objAlert.getPuntuation());
+            resultado = sentencia.executeUpdate();
+            sentencia.close();
+            this.connectionDB.disconnect();
+
+        } catch (SQLException e) {
+            System.out.println("error en la inserción: " + e.getMessage());
+        }
+
+        return resultado == 1;
     }
 
     @Override
-    public ArrayList<AlertDTO> selectAlerts(int numAlerts) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<AlertDTO> selectAlerts(int roomid,int numAlerts) {
+        ArrayList<AlertDTO> alerts = new ArrayList();
+
+        this.connectionDB.connect();
+        try {
+            PreparedStatement sentencia = null;
+            String consulta = "select * from alerts where roomIDAlert=?";
+            sentencia = this.connectionDB.getConnection().prepareStatement(consulta);
+            sentencia.setInt(1,roomid);
+            ResultSet res = sentencia.executeQuery();
+            while (res.next()) {
+                AlertDTO objAlert = new AlertDTO();
+                objAlert.setRoomNum(res.getInt("roomIDAlert"));
+                objAlert.setAlertDate(res.getDate("date"));
+                objAlert.setPuntuation(res.getInt("score"));
+                alerts.add(objAlert);
+            }
+            sentencia.close();
+            this.connectionDB.disconnect();
+
+        } catch (SQLException e) {
+            System.out.println("error Consulta: " + e.getMessage());
+        }
+
+        return alerts;
     }
-    
+
 }

@@ -19,12 +19,15 @@ import servidorAlertas.dto.PatientDTO;
  */
 public class UpdateGUI extends javax.swing.JDialog {
 
+    RoomGUI parent;
     /**
      * Creates new form UpdateGUI
      */
-    public UpdateGUI(java.awt.Frame parent, boolean modal) {
+    public UpdateGUI(RoomGUI parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        parent=parent;
+        clearAll();
     }
 
     public JDateChooser getjDataBirthday() {
@@ -220,6 +223,7 @@ public class UpdateGUI extends javax.swing.JDialog {
         this.lblmgsLastnameError.setText("");
         this.lblmgsRoomError.setText("");
         this.lblmgsDateError.setText("");
+        this.lblReply.setText("");
     }
   private void clearAll(){
       clearLabels();
@@ -271,9 +275,9 @@ public class UpdateGUI extends javax.swing.JDialog {
                     DateFormat f = new SimpleDateFormat("dd/MM/yyyy");
                     String fecha2 = f.format(fecha);
 
-                    PatientDTO patient = new PatientDTO(this.txtName.getText(), this.txtLastname.getText(), Integer.parseInt(this.txtHabitacion.getText()), fecha2);
-                    patient.setPatientClbk(RoomGUI.patient);
-                    boolean reply=RoomGUI.ref.modifyPatient(Integer.parseInt(this.txtHabitacion.getText()),patient);
+                    PatientDTO patient = new PatientDTO(this.txtName.getText(), this.txtLastname.getText(), Integer.parseInt(this.txtHabitacion.getText()), fecha2,this.parent.getPatientCallback());
+                    patient.setPatientClbk(this.parent.patientCallback);
+                    boolean reply=this.parent.ref.modifyPatient(Integer.parseInt(this.txtHabitacion.getText()),patient);
                
                     if (reply) {
                         clearLabels();

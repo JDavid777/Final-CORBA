@@ -25,16 +25,17 @@ import servidorAlertas.sop_corba.IPatientManagementOperations;
 public class RegisterGUI extends javax.swing.JDialog {
 
     static IPatientManagementOperations ref;
-
+    private RoomGUI parent;
     /**
      * Creates new form NewJDialog
      *
      * @param parent
      * @param modal
      */
-    public RegisterGUI(java.awt.Frame parent, boolean modal) {
+    public RegisterGUI(RoomGUI parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.parent=parent;
         this.clearLabels();
     }
 
@@ -285,8 +286,8 @@ public class RegisterGUI extends javax.swing.JDialog {
                     DateFormat f = new SimpleDateFormat("dd/MM/yyyy");
                     String fecha2 = f.format(fecha);
 
-                    PatientDTO patient = new PatientDTO(this.txtName.getText(), this.txtLastname.getText(), Integer.parseInt(this.txtHabitacion.getText()), fecha2);
-                    boolean reply=RoomGUI.ref.registerPatient(patient);
+                    PatientDTO patient = new PatientDTO(this.txtName.getText(), this.txtLastname.getText(), Integer.parseInt(this.txtHabitacion.getText()), fecha2,this.parent.getPatientCallback());
+                    boolean reply=this.parent.ref.registerPatient(patient);
                     if (reply) {
                         clearLabels();
                         this.lblReply.setForeground(Color.green);

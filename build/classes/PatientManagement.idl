@@ -21,6 +21,7 @@ module sop_corba{
 			string lastname;
 			long roomNumber;
 			string birthday;
+			string age;
 			IndicatorsDTO indicators;
 			IPatientCallback patientClbk;
 		};
@@ -28,8 +29,7 @@ module sop_corba{
 		boolean registerPatient(in PatientDTO objPatient);
 		boolean findPatient(in long roomId,out PatientDTO objPatient);
 		boolean modifyPatient(in long roomId,in PatientDTO objPatientModified);
-		boolean selectPatient(in long roomId,out PatientDTO objPatientSelected);
-		PatientsListDTO selectAllPatients();
+		PatientsListDTO selectAllPatients(in IPatientCallback callback);
 		boolean sendIndicators(in long roomId,in IndicatorsDTO indicators);
 
 	};

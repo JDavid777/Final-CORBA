@@ -70,7 +70,7 @@ public class SensorReading extends Thread {
                 ventana.getJtxtADataOut().append(resultadoLectura);
                 ventana.getJtxtADataOut().append("\n_________________________________________");
                 
-                RoomGUI.ref.sendIndicators(Integer.parseInt(ventana.getLblPatientRoom().getText()), indicadores);
+                this.ventana.ref.sendIndicators(Integer.parseInt(ventana.getLblPatientRoom().getText()), indicadores);
                 
                 Thread.sleep(8 * 1000);
                 
