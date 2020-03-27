@@ -56,20 +56,24 @@ public class PatientDAO implements IPatientDAO {
          PatientDTO objPatient= new PatientDTO();
         try {
             PreparedStatement sentence=null;
-            String consult="select * from patient where roomnumberPatient="+roomId;
+            String consult="select * from patient where roomID=?";
+           
             sentence=this.connectionDB.getConnection().prepareStatement(consult);
+            sentence.setInt(1, roomId);
             ResultSet reply =sentence.executeQuery();
-            if (reply!=null) {
-               
-            objPatient.roomNumber=(reply.getInt("roomID"));
-            objPatient.name=(reply.getString("name"));
+            while(reply.next()){
+                //System.out.println(reply.getInt("roomID"));
+              
+            objPatient.setRoomNumber(reply.getInt("roomID"));
+            objPatient.setName(reply.getString("name"));
             objPatient.setLastname(reply.getString("lastname"));
             objPatient.setBirthday(reply.getString("birthday"));
             }
             sentence.close();
             this.connectionDB.disconnect();
+        
         } catch (SQLException e) {
-                  System.out.println("error en la inserción: "+e.getMessage());         
+                  System.out.println("error en la busqueda: "+e.getMessage());         
         }
         
         return objPatient;

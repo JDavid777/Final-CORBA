@@ -36,17 +36,25 @@ public class PatientManagement implements IPatientManagementOperations{
     public boolean registerPatient(PatientDTO objPatient) {
         this.initPOAS();
         if (objPatient!=null) {
-            this.patientDAO.registerPatient(objPatient);
-            return true;
-        }
+            if(this.patientDAO.registerPatient(objPatient)){
+             
+            System.out.println("Registrando paciente...");
+             return true;
+
+            }
+                   }
         return false;
     }
 
     @Override
     public boolean findPatient(int roomId, PatientDTOHolder objPatient) {
+          System.out.println("Buscando paciente...");
         this.initPOAS();
         if (objPatient!=null) {
-            objPatient.value=this.patientDAO.findPatient(roomId);
+          PatientDTO patient=this.patientDAO.findPatient(roomId);
+          patient.setIndicators(new IndicatorsDTO());
+            objPatient.value=patient;
+          
             return true;
         }
         return false;
@@ -57,6 +65,7 @@ public class PatientManagement implements IPatientManagementOperations{
         this.initPOAS();
         if (objPatientModified!=null) {
              this.patientDAO.modifyPatient(objPatientModified.roomNumber, objPatientModified);
+             System.out.println("Modificando paciente...");
              return true;
         }
        return false;
@@ -67,6 +76,7 @@ public class PatientManagement implements IPatientManagementOperations{
         this.initPOAS();
         if (roomId>99 && roomId<1000) {
             objPatientSelected.value=this.patientDAO.selectPatient(roomId);
+            System.out.println("Seleccionando paciente...");
             return true;
         }
         return false;
@@ -77,6 +87,7 @@ public class PatientManagement implements IPatientManagementOperations{
         ArrayList<PatientDTO> patients=this.patientDAO.selectAllPatients();
         String[] patientsList;
         patientsList = (String[])patients.toArray();
+        System.out.println("Consultando lista de pacientes...");
       return patientsList;
     }
     

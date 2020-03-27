@@ -84,7 +84,7 @@ public class ViewAllGUI extends javax.swing.JDialog {
             }
         });
 
-        btnCancel.setText("Cancelar");
+        btnCancel.setText("Volver");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelActionPerformed(evt);

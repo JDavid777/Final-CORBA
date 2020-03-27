@@ -328,14 +328,15 @@ public class RoomGUI extends javax.swing.JFrame {
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
         this.lblMgs.setText("");
         if (txtFind.getText().length()>0 & txtFind.getText().length()<4 && this.isNumeric(txtFind.getText())) {
-             PatientDTOHolder objPatient = new PatientDTOHolder();
-                    boolean reply=RoomGUI.ref.findPatient(Integer.parseInt(txtFind.getText()), objPatient);
+             PatientDTOHolder objPatientHolder = new PatientDTOHolder();
+                    boolean reply=RoomGUI.ref.findPatient(Integer.parseInt(txtFind.getText()), objPatientHolder);
                     if (reply) {
                        ViewPatiientGUI dialog = new ViewPatiientGUI(new javax.swing.JFrame(), true);
-                       dialog.getLblName().setText(objPatient.value.name);
-                       dialog.getLblLastname().setText(objPatient.value.lastname);
-                       dialog.getLblBirthday().setText(objPatient.value.birthday);
-                       dialog.getLblRoom().setText(String.valueOf(objPatient.value.roomNumber));
+                       PatientDTO objPatient= objPatientHolder.value;
+                       dialog.getLblName().setText(objPatient.name);
+                       dialog.getLblLastname().setText(objPatient.lastname);
+                       dialog.getLblBirthday().setText(objPatient.birthday);
+                       dialog.getLblRoom().setText(String.valueOf(objPatient.roomNumber));
                        dialog.setVisible(true);
                        this.lblMgs.setText("");
                     }

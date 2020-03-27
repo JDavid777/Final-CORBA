@@ -88,7 +88,7 @@ public class UpdateGUI extends javax.swing.JDialog {
         lblmgsDateError.setFont(new java.awt.Font("Dialog", 2, 10)); // NOI18N
         lblmgsDateError.setText("jLabel5");
 
-        btnCancel.setText("Cancelar");
+        btnCancel.setText("Volver");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelActionPerformed(evt);
@@ -104,9 +104,9 @@ public class UpdateGUI extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
+                        .addContainerGap(183, Short.MAX_VALUE)
                         .addComponent(btnCancel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnUpdate))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(44, 44, 44)

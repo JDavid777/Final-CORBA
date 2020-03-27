@@ -9,7 +9,7 @@ package servidorAlertas.dto;
 
 public final class PatientDTOHolder implements org.omg.CORBA.portable.Streamable
 {
-  public servidorAlertas.dto.PatientDTO value = null;
+  public servidorAlertas.dto.PatientDTO value;
 
   public PatientDTOHolder ()
   {
