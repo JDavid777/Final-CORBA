@@ -182,7 +182,7 @@ public class ViewAllGUI extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_tblPatientsMouseClicked
 private void updateTable(){
-    String[] listpatients = this.parent.ref.selectAllPatients(this.parent.getPatientCallback());
+    String[] listpatients = this.parent.ref.selectAllPatients();
     this.numberElements=0;
         for (int i = 0; i < listpatients.length; i++) {
             String[] patient = listpatients[i].split(",");

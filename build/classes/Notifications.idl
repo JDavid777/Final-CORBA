@@ -1,21 +1,17 @@
 module sop_corba{
 	interface INotificationsManagement{
 
-		struct IndicatorsDTO{
-		 double cardiacFrequency;
-		 double systolicBloodPressure;
-		 double diastolicBloodpressure;
-		 double breathingFrequency;
-		 double oxigenSaturation;
-		 double temperature;
-		};
+		typedef sequence<string> list;
 		struct NotificationDTO{
-		 string name;
-		 string lastname;
 		 long roomNumber;
+		 string nameComplete;
 		 string age;
+		 string hour;
+		 string date;
 		 string message;
-		 IndicatorsDTO indicators;
+		 list indicators;
+		 list lastFiveAlerts;
+		 
 
 		};
 		boolean notifyAlert(in NotificationDTO objNotification);

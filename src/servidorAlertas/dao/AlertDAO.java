@@ -56,9 +56,10 @@ public class AlertDAO implements IAlertDAO {
         this.connectionDB.connect();
         try {
             PreparedStatement sentencia = null;
-            String consulta = "select * from alerts where roomIDAlert=?";
+            String consulta = "select * from alerts where roomIDAlert=? order by date desc limit ?";
             sentencia = this.connectionDB.getConnection().prepareStatement(consulta);
             sentencia.setInt(1,roomid);
+            sentencia.setInt(2, numAlerts);
             ResultSet res = sentencia.executeQuery();
             while (res.next()) {
                 AlertDTO objAlert = new AlertDTO();

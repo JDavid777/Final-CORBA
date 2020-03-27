@@ -30,10 +30,9 @@ public class RoomGUI extends javax.swing.JFrame {
     public PatientDTO actualPatient;
     SensorReading objLecturaSensores;
 
-    public RoomGUI(IPatientManagementOperations ref, IPatientCallback patient) {
+    public RoomGUI() {
         initComponents();
-        this.patientCallback = patient;
-        this.ref = ref;
+       
     }
 
     public IPatientCallback getPatientCallback() {
@@ -347,11 +346,10 @@ public class RoomGUI extends javax.swing.JFrame {
 
     private void menuViewAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuViewAllMouseClicked
         ViewAllGUI listPatients = new ViewAllGUI(this, true);
-        String[] listpatients = this.ref.selectAllPatients(this.patientCallback);
-        
+        String[] listpatients = this.ref.selectAllPatients();
+           
         for (int i = 0; i < listpatients.length; i++) {
             String[] objPatient = listpatients[i].split(",");
-         System.out.println(listpatients);
             for (int j = 0; j < objPatient.length - 1; j++) {
                             
                 listPatients.getTblPatients().setValueAt(objPatient[0], i, 0);

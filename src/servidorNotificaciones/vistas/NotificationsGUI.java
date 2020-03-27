@@ -12,12 +12,12 @@ import javax.swing.JTable;
  *
  * @author dawish
  */
-public class VistaNotificaciones extends javax.swing.JFrame {
+public class NotificationsGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaNotificaciones
      */
-    public VistaNotificaciones() {
+    public NotificationsGUI() {
         initComponents();
     }
 

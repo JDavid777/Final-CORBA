@@ -29,8 +29,8 @@ module sop_corba{
 		boolean registerPatient(in PatientDTO objPatient);
 		boolean findPatient(in long roomId,out PatientDTO objPatient);
 		boolean modifyPatient(in long roomId,in PatientDTO objPatientModified);
-		PatientsListDTO selectAllPatients(in IPatientCallback callback);
-		boolean sendIndicators(in long roomId,in IndicatorsDTO indicators);
+		PatientsListDTO selectAllPatients();
+		boolean sendIndicators(in long roomId,in IndicatorsDTO indicators,in IPatientCallback callback);
 
 	};
 };

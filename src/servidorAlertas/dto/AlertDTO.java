@@ -55,4 +55,9 @@ public class AlertDTO {
         this.puntuation = puntuation;
     }
 
+    @Override
+    public String toString() {
+        return roomNum + "," + alertDate + "," + puntuation;
+    }
+
 }

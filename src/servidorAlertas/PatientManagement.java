@@ -41,14 +41,14 @@ public class PatientManagement implements IPatientManagementOperations {
 
     private PatientDAO patientDAO;
     private ArrayList<String> indicadoresAlerta;
-    private ArrayList<String> ultimasCincoAlertas= new ArrayList<>();
+    private ArrayList<String> ultimasCincoAlertas = new ArrayList<>();
     private AlertDAO alertDAO;
     Hashtable<Integer, IPatientCallback> diccionario = new Hashtable<Integer, IPatientCallback>();
+
     private void initDAO() {
-        alertDAO=new AlertDAO();
+        alertDAO = new AlertDAO();
         patientDAO = new PatientDAO();
     }
-
     @Override
     public boolean registerPatient(PatientDTO objPatient) {
         this.initDAO();
@@ -66,7 +66,7 @@ public class PatientManagement implements IPatientManagementOperations {
             } else {
                 diccionario.put(objPatient.getRoomNumber(), objPatient.getPatientClbk());
                 objPatient.getPatientClbk().notifyAlert(objPatient.getRoomNumber(), "Paciente registrado");
-                flag=true;
+                flag = true;
             }
         }
         return flag;
@@ -90,38 +90,46 @@ public class PatientManagement implements IPatientManagementOperations {
     @Override
     public boolean modifyPatient(int roomId, PatientDTO objPatientModified) {
         this.initDAO();
+        boolean flag=false;
         if (objPatientModified != null) {
             this.patientDAO.modifyPatient(objPatientModified.roomNumber, objPatientModified);
             System.out.println("Modificando paciente...");
-            return true;
+            flag= true;
         }
+         if (diccionario.containsKey(objPatientModified.getRoomNumber())) {
+                objPatientModified.getPatientClbk().notifyAlert(objPatientModified.getRoomNumber(), "Paciente ya registrado");
+                flag = false;
+
+            } else {
+                diccionario.put(objPatientModified.getRoomNumber(), objPatientModified.getPatientClbk());
+                objPatientModified.getPatientClbk().notifyAlert(objPatientModified.getRoomNumber(), "Paciente registrado");
+                flag = true;
+            }
         return false;
     }
 
     @Override
-    public String[] selectAllPatients(IPatientCallback callback) {
+    public String[] selectAllPatients() {
         this.initDAO();
         System.out.println("Consultando lista de pacientes...");
-       
         ArrayList<PatientDTO> patients = this.patientDAO.selectAllPatients();
-        if (!patients.isEmpty()) {
-            
-         diccionario.put(patients.get(0).roomNumber, callback);
-        }
         String[] patientsList = new String[patients.size()];
         System.out.println(patients.size());
         for (int i = 0; i < patients.size(); i++) {
             patientsList[i] = patients.get(i).toString();
-           
+
         }
 
         return patientsList;
     }
 
     @Override
-    public boolean sendIndicators(int roomId, IndicatorsDTO listIndicators) {
+    public boolean sendIndicators(int roomId, IndicatorsDTO listIndicators,IPatientCallback callback) {
         this.initDAO();
         PatientDTO patient = this.patientDAO.findPatient(roomId);
+        if (!diccionario.containsKey(patient.getRoomNumber())) {
+            diccionario.put(roomId, callback);
+        }
         patient.setPatientClbk(diccionario.get(roomId));
         patient.setIndicators(listIndicators);
         int puntuacion = gestionarIndicadores(patient);
@@ -133,9 +141,9 @@ public class PatientManagement implements IPatientManagementOperations {
             //MEJORAR CODIGO COCHINO!!!
             System.out.println("GENERANDO ALERTA");
             avisarHabitacion(roomId, "Alerta LLAMAR A LA ENFERMERA");
-             java.util.Date d = new java.util.Date();  
+            java.util.Date d = new java.util.Date();
             java.sql.Date date = new java.sql.Date(d.getTime());
-            AlertDTO alert= new AlertDTO(patient.getRoomNumber(),puntuacion);
+            AlertDTO alert = new AlertDTO(patient.getRoomNumber(), puntuacion);
             alertDAO.registerAlert(alert);
             ArrayList alerta = construirMensajeDeAlerta(patient, "ENFERMERA NECESARIA PARA ATENDER EMERGENCIA");
             avisarServidorNotificaciones(alerta);
@@ -143,10 +151,9 @@ public class PatientManagement implements IPatientManagementOperations {
         } else if (puntuacion >= 3) {
             System.out.println("GENERANDO ALERTA");
             avisarHabitacion(roomId, "Alerta LLAMAR A LA ENFERMERA Y AL MEDICO");
-            AlertDTO alert= new AlertDTO(patient.getRoomNumber(),puntuacion);
-             alertDAO.registerAlert(alert);
+            AlertDTO alert = new AlertDTO(patient.getRoomNumber(), puntuacion);
+            alertDAO.registerAlert(alert);
             ArrayList alerta = construirMensajeDeAlerta(patient, "MEDICO Y ENFERMERA NECESARIOS PARA ATENDER EMERGENCIA");
-      
             avisarServidorNotificaciones(alerta);
         }
         return true;
@@ -169,7 +176,7 @@ public class PatientManagement implements IPatientManagementOperations {
             refNotifiacations = INotificationsManagementHelper.narrow(ncRef.resolve_str(name));
 
         } catch (InvalidName | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName | NotFound e) {
-            System.out.println("Error:"+ e);
+            System.out.println("Error:" + e);
         }
     }
 
@@ -179,7 +186,7 @@ public class PatientManagement implements IPatientManagementOperations {
         alertMsg.add(patient.getRoomNumber());
         alertMsg.add(patient.getName());
         alertMsg.add(patient.getLastname());
-        // mensajeAlerta.add(paciente.getEda);//TODO :Cuadrar edad
+        alertMsg.add(patient.getAge());//TODO :Cuadrar edad
 
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
@@ -201,14 +208,14 @@ public class PatientManagement implements IPatientManagementOperations {
     }
 
     private void agregarAlerta(int numHabitacion) {
-        ArrayList<AlertDTO> list=alertDAO.selectAlerts(numHabitacion, 5);
+        ArrayList<AlertDTO> list = alertDAO.selectAlerts(numHabitacion, 5);
         for (int i = 0; i < list.size(); i++) {
             this.ultimasCincoAlertas.add(list.get(i).toString());
         }
-           }
+    }
 
     public int gestionarIndicadores(PatientDTO patient) {
-         this.indicadoresAlerta = new ArrayList();
+        this.indicadoresAlerta = new ArrayList();
         int puntuation = 0;
         switch (grupoAlQuePertenece(patient)) {
             case 1:
@@ -276,19 +283,27 @@ public class PatientManagement implements IPatientManagementOperations {
 
     private void avisarServidorNotificaciones(ArrayList alerta) {
         System.out.println("Notificando Al servidor de notificaciones");
-        NotificationDTO objAlerta = new NotificationDTO(alerta.get(0).toString(), alerta.get(1).toString(), alerta.get(2).toString(),
-                alerta.get(3).toString(), alerta.get(4).toString(),
-                alerta.get(5).toString(), alerta.get(6).toString(), this.indicadoresAlerta, this.ultimasCincoAlertas);
-       //this.refNotifiacations.notifyAlert(objAlerta);
+        int room = Integer.parseInt(alerta.get(0).toString());
+        String nameComplet = alerta.get(1).toString()+alerta.get(2).toString();
+        String age = alerta.get(3).toString();
+        String hour = alerta.get(4).toString();
+        String date = alerta.get(5).toString();
+        String mgs = alerta.get(6).toString();
+        String[] indicators = alerta.get(7).toString().split(",");
+        String fiveAlerts = alerta.get(8).toString();
+        String[] lastFiveAlerts=fiveAlerts.split(",");
+        NotificationDTO objAlerta = new NotificationDTO( room,nameComplet,age,hour, date,mgs,indicators,lastFiveAlerts);
+         this.refNotifiacations.notifyAlert(objAlerta);
     }
 
-    private void avisarHabitacion(int numeroHabitacion, String Mensaje){
+    private void avisarHabitacion(int numeroHabitacion, String Mensaje) {
         try {
             System.out.println("Avisando a la habitacion");
-           
-            PatientDTO patient= this.patientDAO.findPatient(numeroHabitacion);
+                
+            PatientDTO patient = this.patientDAO.findPatient(numeroHabitacion);
             patient.setPatientClbk(diccionario.get(numeroHabitacion));
-            patient.patientClbk.notifyAlert(numeroHabitacion, Mensaje);
+            System.err.println(patient.patientClbk.notifyAlert(numeroHabitacion, Mensaje));
+          
         } catch (Exception e) {
             System.out.println("No se pudo notificar al paciente " + e);
         }

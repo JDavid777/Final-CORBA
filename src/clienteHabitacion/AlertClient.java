@@ -51,8 +51,8 @@ public class AlertClient {
             NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
             POA rootPOA = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
             rootPOA.the_POAManager().activate();
-
-            PatientCallback pacinte = new PatientCallback();
+               RoomGUI view = new RoomGUI();
+            PatientCallback pacinte = new PatientCallback(view);
 
             org.omg.CORBA.Object ref1 = rootPOA.servant_to_reference(pacinte);
             IPatientCallback href1 = IPatientCallbackHelper.narrow(ref1);
@@ -61,8 +61,9 @@ public class AlertClient {
             ref = IPatientManagementHelper.narrow(ncRef.resolve_str(name));
 
             System.out.println("Obtenido el manejador sobre el servidor de objetos: " + ref);
-            RoomGUI view = new RoomGUI(ref, href1);
-
+         
+            view.setPatientCallback(href1);
+            view.ref=ref;
             view.getLblStatus().setBackground(Color.GREEN);
             view.getLblStatus().setForeground(Color.green);
             view.getBtnStart().setEnabled(false);

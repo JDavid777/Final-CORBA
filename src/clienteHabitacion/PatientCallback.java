@@ -5,6 +5,7 @@
  */
 package clienteHabitacion;
 
+import clienteHabitacion.vistas.RoomGUI;
 import servidorAlertas.sop_corba.IPatientCallbackPOA;
 
 /**
@@ -13,10 +14,18 @@ import servidorAlertas.sop_corba.IPatientCallbackPOA;
  */
 public class PatientCallback extends IPatientCallbackPOA{
 
+    private RoomGUI view;
+    public PatientCallback(RoomGUI view) {
+        this.view=view;
+    }
+    
+
+    
+    
     @Override
     public String notifyAlert(int roomNumber, String message) {
-        System.out.println(message);
-        return message;
+        this.view.getTxtADataIn().setText(message);
+        return "Habitacion notificada";
     }
 
     
