@@ -31,6 +31,7 @@
             <file>file:/home/dawish/NetBeansProjects/lsd_corba_archivos_fuente_MensesC_GarcíaJ/src/servidorAlertas/dto/PatientsListDTOHolder.java</file>
             <file>file:/home/dawish/NetBeansProjects/lsd_corba_archivos_fuente_MensesC_GarcíaJ/src/servidorAlertas/dao/PatientDAO.java</file>
             <file>file:/home/dawish/NetBeansProjects/lsd_corba_archivos_fuente_MensesC_GarcíaJ/src/servidorAlertas/sop_corba/IPatientCallbackPOA.java</file>
+            <file>file:/home/dawish/NetBeansProjects/lsd_corba_archivos_fuente_MensesC_GarcíaJ/src/servidorAlertas/sop_corba/_IPatientCallbackStub.java</file>
         </group>
     </open-files>
 </project-private>

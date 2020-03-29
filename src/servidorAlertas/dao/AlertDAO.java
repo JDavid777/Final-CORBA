@@ -32,12 +32,14 @@ public class AlertDAO implements IAlertDAO {
         int resultado = -1;
         try {
             PreparedStatement sentencia = null;
-            String consulta = "insert INTO alerts (roomIDAlert,score)values(?,?)";
+            String consulta = "insert INTO alerts values(?,?,?,?)";
 
             sentencia = this.connectionDB.getConnection().prepareStatement(consulta);
 
             sentencia.setInt(1, objAlert.getRoomNum());
-            sentencia.setInt(2, objAlert.getPuntuation());
+            sentencia.setDate(2,objAlert.getAlertDate());
+            sentencia.setString(3, objAlert.getHour());
+            sentencia.setInt(4, objAlert.getPuntuation());
             resultado = sentencia.executeUpdate();
             sentencia.close();
             this.connectionDB.disconnect();
@@ -65,7 +67,9 @@ public class AlertDAO implements IAlertDAO {
                 AlertDTO objAlert = new AlertDTO();
                 objAlert.setRoomNum(res.getInt("roomIDAlert"));
                 objAlert.setAlertDate(res.getDate("date"));
+                objAlert.setHour(res.getString("hour"));
                 objAlert.setPuntuation(res.getInt("score"));
+                System.out.println(objAlert.toString());
                 alerts.add(objAlert);
             }
             sentencia.close();

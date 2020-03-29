@@ -123,7 +123,7 @@ public class PatientManagement implements IPatientManagementOperations {
         return patientsList;
     }
 
-    @Override
+ @Override
     public boolean sendIndicators(int roomId, IndicatorsDTO listIndicators,IPatientCallback callback) {
         this.initDAO();
         PatientDTO patient = this.patientDAO.findPatient(roomId);
@@ -140,20 +140,33 @@ public class PatientManagement implements IPatientManagementOperations {
 
             //MEJORAR CODIGO COCHINO!!!
             System.out.println("GENERANDO ALERTA");
-            avisarHabitacion(roomId, "¡ALERTA! LLAMAR A LA ENFERMERA"+"_"+indicadoresAlerta.toString());
+             avisarHabitacion(roomId, "¡ALERTA! LLAMAR A LA ENFERMERA"+"_"+indicadoresAlerta.toString());
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+            Date date = new Date();
+            String hour = dateFormat.format(date);
+  
+  
             java.util.Date d = new java.util.Date();
-            java.sql.Date date = new java.sql.Date(d.getTime());
-            AlertDTO alert = new AlertDTO(patient.getRoomNumber(), puntuacion);
+            java.sql.Date actualDate = new java.sql.Date(d.getTime());
+            
+            AlertDTO alert = new AlertDTO(patient.getRoomNumber(),actualDate,hour,puntuacion);
             alertDAO.registerAlert(alert);
-            ArrayList alerta = construirMensajeDeAlerta(patient, "ENFERMERA NECESARIA PARA ATENDER EMERGENCIA");
+            ArrayList alerta = construirMensajeDeAlerta(patient, alert,"ENFERMERA NECESARIA PARA ATENDER EMERGENCIA");
             avisarServidorNotificaciones(alerta);
 
         } else if (puntuacion >= 3) {
             System.out.println("GENERANDO ALERTA");
-            avisarHabitacion(roomId, "¡ALERTA! LLAMAR A LA ENFERMERA Y AL MEDICO"+"_"+indicadoresAlerta.toString());
-            AlertDTO alert = new AlertDTO(patient.getRoomNumber(), puntuacion);
+           avisarHabitacion(roomId, "¡ALERTA! LLAMAR A LA ENFERMERA Y AL MEDICO"+"_"+indicadoresAlerta.toString());
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+            Date date = new Date();
+            String hour = dateFormat.format(date);
+  
+  
+            java.util.Date d = new java.util.Date();
+            java.sql.Date actualDate = new java.sql.Date(d.getTime());
+            AlertDTO alert = new AlertDTO(patient.getRoomNumber(),actualDate,hour,puntuacion);
             alertDAO.registerAlert(alert);
-            ArrayList alerta = construirMensajeDeAlerta(patient, "MEDICO Y ENFERMERA NECESARIOS PARA ATENDER EMERGENCIA");
+            ArrayList alerta = construirMensajeDeAlerta(patient, alert,"MEDICO Y ENFERMERA NECESARIOS PARA ATENDER EMERGENCIA");
             avisarServidorNotificaciones(alerta);
         }
         return true;
@@ -180,7 +193,7 @@ public class PatientManagement implements IPatientManagementOperations {
         }
     }
 
-    private ArrayList construirMensajeDeAlerta(PatientDTO patient, String msgInfo) {
+      private ArrayList construirMensajeDeAlerta(PatientDTO patient,AlertDTO alert,String msgInfo) {
 
         ArrayList alertMsg = new ArrayList();
         alertMsg.add(patient.getRoomNumber());
@@ -188,26 +201,18 @@ public class PatientManagement implements IPatientManagementOperations {
         alertMsg.add(patient.getLastname());
         alertMsg.add(patient.getAge());//TODO :Cuadrar edad
 
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-        Date date = new Date();
-        String Hora = dateFormat.format(date);
-        alertMsg.add(Hora);
-
-        DateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-        Date date2 = new Date();
-        String Fecha = f.format(date2);
-
-        alertMsg.add(Fecha);
+        alertMsg.add(alert.getHour());
+        alertMsg.add(alert.getAlertDate());
         alertMsg.add(msgInfo);
         alertMsg.add(indicadoresAlerta);
-        agregarAlerta(patient.getRoomNumber());
+        getLastAlerts(patient.getRoomNumber());
         alertMsg.add(ultimasCincoAlertas);
 
         return alertMsg;
 
     }
 
-    private void agregarAlerta(int numHabitacion) {
+    private void getLastAlerts(int numHabitacion) {
         ArrayList<AlertDTO> list = alertDAO.selectAlerts(numHabitacion, 5);
         for (int i = 0; i < list.size(); i++) {
             this.ultimasCincoAlertas.add(list.get(i).toString());

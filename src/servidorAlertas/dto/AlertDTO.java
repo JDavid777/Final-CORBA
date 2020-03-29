@@ -16,6 +16,7 @@ public class AlertDTO {
 
     private int roomNum;
     private Date alertDate;
+    private String hour;
     private int puntuation;
 
     public AlertDTO() {
@@ -27,9 +28,14 @@ public class AlertDTO {
         this.puntuation = puntuation;
     }
 
-    public AlertDTO(String toString, String toString0, String toString1, String toString2, String toString3, String toString4, String toString5, ArrayList<String> indicadoresAlerta, ArrayList<String> ultimasCincoAlertas) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public AlertDTO(int roomNum, Date alertDate, String hour, int puntuation) {
+        this.roomNum = roomNum;
+        this.alertDate = alertDate;
+        this.hour = hour;
+        this.puntuation = puntuation;
     }
+
+  
 
     public int getRoomNum() {
         return roomNum;
@@ -37,6 +43,14 @@ public class AlertDTO {
 
     public void setRoomNum(int roomNum) {
         this.roomNum = roomNum;
+    }
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
     }
 
     public Date getAlertDate() {
@@ -57,7 +71,7 @@ public class AlertDTO {
 
     @Override
     public String toString() {
-        return roomNum + "," + alertDate + "," + puntuation;
+        return roomNum + "," + alertDate + "," +hour+","+ puntuation;
     }
 
 }
