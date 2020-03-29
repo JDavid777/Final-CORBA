@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import servidorAlertas.dto.PatientDTO;
 
 /**
@@ -20,6 +21,7 @@ import servidorAlertas.dto.PatientDTO;
 public class ViewAllGUI extends javax.swing.JDialog {
 
     private int numberElements = 0;
+  
     /**
      * Creates new form ViewAllGUI
      */
@@ -67,19 +69,10 @@ public class ViewAllGUI extends javax.swing.JDialog {
 
         tblPatients.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Nombres", "Apellidos", "Fecha de nacimiento", "Habitación"
+                "Habitación", "Nombres", "Apellidos", "Fecha de nacimiento"
             }
         ) {
             Class[] types = new Class [] {
@@ -150,8 +143,8 @@ public class ViewAllGUI extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSelect)
                     .addComponent(btnCancel)
@@ -171,7 +164,7 @@ public class ViewAllGUI extends javax.swing.JDialog {
         if (evt.getClickCount() == 2 && !evt.isConsumed() && row < this.numberElements) {
             evt.consume();
 
-            PatientDTO patient = new PatientDTO((String) tblPatients.getValueAt(row, 0), (String) tblPatients.getValueAt(row, 1), Integer.parseInt(tblPatients.getValueAt(row, 2).toString()), tblPatients.getValueAt(row, 3).toString());
+            PatientDTO patient = new PatientDTO(Integer.parseInt(tblPatients.getValueAt(row, 0).toString()),tblPatients.getValueAt(row, 1).toString(),tblPatients.getValueAt(row, 2).toString(), tblPatients.getValueAt(row, 3).toString());
              patient.setPatientClbk(this.parent.patientCallback);
             this.parent.actualPatient = patient;
             this.parent.getLblPatientName().setText(patient.name + " " + patient.lastname);
@@ -200,7 +193,7 @@ private void updateTable(){
         int row = -1;
         row = tblPatients.getSelectedRow();
         if (row >= 0 && row < this.numberElements) {
-            PatientDTO patient = new PatientDTO((String) tblPatients.getValueAt(row, 0), (String) tblPatients.getValueAt(row, 1), Integer.parseInt(tblPatients.getValueAt(row, 2).toString()), tblPatients.getValueAt(row, 3).toString());
+            PatientDTO patient = new PatientDTO(Integer.parseInt(tblPatients.getValueAt(row, 0).toString()),tblPatients.getValueAt(row, 1).toString(),tblPatients.getValueAt(row, 2).toString(), tblPatients.getValueAt(row, 3).toString());
            patient.setPatientClbk(this.parent.patientCallback);
             this.parent.actualPatient = patient;
             

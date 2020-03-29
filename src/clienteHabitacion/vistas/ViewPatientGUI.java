@@ -5,6 +5,7 @@
  */
 package clienteHabitacion.vistas;
 
+import clienteHabitacion.utilidades.SensorReading;
 import javax.swing.JLabel;
 
 /**
@@ -13,12 +14,16 @@ import javax.swing.JLabel;
  */
 public class ViewPatientGUI extends javax.swing.JDialog {
 
+    private RoomGUI parent;
     /**
      * Creates new form ViewPatiientGUI
+     * @param parent
+     * @param modal
      */
-    public ViewPatientGUI(java.awt.Frame parent, boolean modal) {
+    public ViewPatientGUI(RoomGUI parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.parent=parent;
     }
 
     public JLabel getLblBirthday() {
@@ -192,7 +197,33 @@ public class ViewPatientGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
-        // TODO add your handling code here:
+       if (this.parent.patientCallback != null) {
+            if (this.parent.objLecturaSensores != null) {
+         
+                this.parent.objLecturaSensores.startSensor();
+                this.btnStart.setEnabled(false);
+                this.parent.getBtnStop().setEnabled(true);
+                this.parent.getLblPatientName().setText(this.getLblName().getText());
+                this.parent.getLblPatientRoom().setText(this.getLblRoom().getText());
+                 this.setVisible(false);
+                        Thread t = new Thread(this.parent.objLecturaSensores); // .___.
+                t.start();
+            } else {
+                this.parent.objLecturaSensores = new SensorReading(this.parent); // .__.
+                
+                this.parent.objLecturaSensores.startSensor();
+                this.btnStart.setEnabled(false);
+                this.parent.getBtnStop().setEnabled(true);
+                this.parent.getLblPatientName().setText(this.getLblName().getText());
+                this.parent.getLblPatientRoom().setText(this.getLblRoom().getText());
+                this.setVisible(false);
+                Thread t = new Thread(this.parent.objLecturaSensores);
+                t.start();
+                  
+            }
+
+        }
+      
     }//GEN-LAST:event_btnStartActionPerformed
 
 

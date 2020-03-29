@@ -24,8 +24,23 @@ public class PatientCallback extends IPatientCallbackPOA{
     
     @Override
     public String notifyAlert(int roomNumber, String message) {
-        this.view.getTxtADataIn().setText(message);
+        String previusMgs=this.view.getTxtADataIn().getText();
+        this.view.getTxtADataIn().setText(previusMgs+"\n"+buildNotification(message));
         return "Habitacion notificada";
+    }
+    private String buildNotification(String mgs){
+        String[] aux=mgs.split("_");
+        aux[1]= aux[1].replace("["," ");
+       
+        aux[1]= aux[1].replace("]","");//Extraer caracters [ ] de la cadena para mejorar la apariencia del mensaje
+        String[] indicators=aux[1].split(",");
+        String mgsIndicators="";
+        for (String indicator : indicators) {
+            mgsIndicators += indicator + "\n"; 
+        }
+        String notification=aux[0]+"\n El paciente "+"\n"+"El paciente "+this.view.getLblPatientName().getText()+" presenta: "
+                +"\n"+mgsIndicators;
+        return notification;
     }
 
     

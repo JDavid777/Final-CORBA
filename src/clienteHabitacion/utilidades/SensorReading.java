@@ -66,9 +66,9 @@ public class SensorReading extends Thread {
                 + "\n Saturacińn de oxigeno: " + indicadores.oxigenSaturation;
                 ;
                 ;
-                ventana.getJtxtADataOut().append("\n_________________________________________");
+                ventana.getJtxtADataOut().append("\n____________________________");
                 ventana.getJtxtADataOut().append(resultadoLectura);
-                ventana.getJtxtADataOut().append("\n_________________________________________");
+                ventana.getJtxtADataOut().append("\n____________________________");
                 
                 this.ventana.ref.sendIndicators(Integer.parseInt(ventana.getLblPatientRoom().getText()), indicadores,this.ventana.patientCallback);
                 
