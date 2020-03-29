@@ -11,9 +11,6 @@ import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
-import servidorAlertas.PatientManagement;
-import servidorAlertas.sop_corba.IPatientManagement;
-import servidorAlertas.sop_corba.IPatientManagementHelper;
 import servidorNotificaciones.sop_corba.INotificationsManagement;
 import servidorNotificaciones.sop_corba.INotificationsManagementPOATie;
 

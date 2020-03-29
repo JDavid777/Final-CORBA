@@ -71,7 +71,7 @@ public class AlertDTO {
 
     @Override
     public String toString() {
-        return roomNum + "," + alertDate + "," +hour+","+ puntuation;
+        return roomNum + ";" + alertDate + ";" +hour+";"+ puntuation;
     }
 
 }

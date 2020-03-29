@@ -41,7 +41,7 @@ public class PatientManagement implements IPatientManagementOperations {
 
     private PatientDAO patientDAO;
     private ArrayList<String> indicadoresAlerta;
-    private ArrayList<String> ultimasCincoAlertas = new ArrayList<>();
+    private ArrayList<String> ultimasCincoAlertas;
     private AlertDAO alertDAO;
     Hashtable<Integer, IPatientCallback> diccionario = new Hashtable<Integer, IPatientCallback>();
 
@@ -213,6 +213,7 @@ public class PatientManagement implements IPatientManagementOperations {
     }
 
     private void getLastAlerts(int numHabitacion) {
+        ultimasCincoAlertas = new ArrayList<>();
         ArrayList<AlertDTO> list = alertDAO.selectAlerts(numHabitacion, 5);
         for (int i = 0; i < list.size(); i++) {
             this.ultimasCincoAlertas.add(list.get(i).toString());
@@ -297,11 +298,13 @@ public class PatientManagement implements IPatientManagementOperations {
         String auxIndicators=alerta.get(7).toString();
         auxIndicators=auxIndicators.replace("[", "");
         auxIndicators=auxIndicators.replace("]", "");
-        System.out.println(auxIndicators);
         String[] indicators = auxIndicators.split(",");
-        String fiveAlerts = alerta.get(8).toString();
-        System.out.println(fiveAlerts);
-        String[] lastFiveAlerts=fiveAlerts.split(",");
+        
+        String auxFiveAlerts = alerta.get(8).toString();
+        System.out.println(auxFiveAlerts);
+        auxFiveAlerts=auxFiveAlerts.replace("[", "");
+        auxFiveAlerts=auxFiveAlerts.replace("]", "");
+        String[] lastFiveAlerts=auxFiveAlerts.split(",");
         NotificationDTO objAlerta = new NotificationDTO( room,nameComplet,age,hour, date,mgs,indicators,lastFiveAlerts);
          this.refNotifiacations.notifyAlert(objAlerta);
     }

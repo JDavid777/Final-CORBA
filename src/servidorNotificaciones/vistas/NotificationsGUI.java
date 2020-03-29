@@ -149,7 +149,7 @@ public class NotificationsGUI extends javax.swing.JFrame {
         lblFecha.setText("jLabel12");
 
         tblIndicadoresCausantes.setBackground(new java.awt.Color(145, 158, 237));
-        tblIndicadoresCausantes.setForeground(new java.awt.Color(1, 1, 1));
+        tblIndicadoresCausantes.setFont(new java.awt.Font("Liberation Sans", 0, 12)); // NOI18N
         tblIndicadoresCausantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -162,13 +162,22 @@ public class NotificationsGUI extends javax.swing.JFrame {
             new String [] {
                 "Nombre del indicador", "Valor"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblIndicadoresCausantes);
 
         lblMensaje.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         lblMensaje.setText("Ultimas cinco alertas");
 
         tblUltimasAlertas.setBackground(new java.awt.Color(118, 141, 207));
+        tblUltimasAlertas.setFont(new java.awt.Font("Liberation Serif", 0, 12)); // NOI18N
         tblUltimasAlertas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -180,8 +189,21 @@ public class NotificationsGUI extends javax.swing.JFrame {
             new String [] {
                 "Fecha de la alerta", "Hora de la alerta", "Puntuación"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tblUltimasAlertas);
+        if (tblUltimasAlertas.getColumnModel().getColumnCount() > 0) {
+            tblUltimasAlertas.getColumnModel().getColumn(0).setResizable(false);
+            tblUltimasAlertas.getColumnModel().getColumn(1).setResizable(false);
+            tblUltimasAlertas.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         lblMensaje2.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         lblMensaje2.setForeground(new java.awt.Color(254, 9, 18));
@@ -261,14 +283,14 @@ public class NotificationsGUI extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel7)
                 .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(lblMensaje2)
                 .addGap(18, 18, 18)
                 .addComponent(lblMensaje)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
